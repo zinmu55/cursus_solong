@@ -1,12 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h> // for close()
+# include "./solong.h"
 
-// MinilibXのヘッダーファイル
-// あなたの環境に合わせてパスを修正してください
-// 例: #include <X11/mlx.h> または #include "../minilibx_linux/mlx.h"
-#include "../minilibx-linux/mlx.h"
 
 // 定数
 #define TILE_SIZE 32 // 各タイルのピクセルサイズ (例: 32x32px)
@@ -242,8 +235,7 @@ void	check_elements(t_map *map)
 			}
 			else if (c != '0' && c != '1')
 			{
-				error_exit("Map contains invalid characters. (Allowed: 0, 1, P,
-						E, C)");
+				error_exit("Map contains invalid characters. (Allowed: 0, 1, P, E, C)");
 			}
 		}
 	}

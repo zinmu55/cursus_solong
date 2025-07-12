@@ -36,6 +36,13 @@ int	key_press_hook(int keycode, t_game *game)
 	return (0);
 }
 
+// エラー終了関数（前のステップからコピペ）
+void	error_exit(const char *message)
+{
+	fprintf(stderr, "Error\n%s\n", message);
+	exit(EXIT_FAILURE);
+}
+
 int	main(void)
 {
 	t_game game; // t_game構造体のインスタンス
@@ -57,11 +64,4 @@ int	main(void)
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
 	mlx_loop(game.mlx_ptr);
 	return (0);
-}
-
-// エラー終了関数（前のステップからコピペ）
-void	error_exit(const char *message)
-{
-	fprintf(stderr, "Error\n%s\n", message);
-	exit(EXIT_FAILURE);
 }

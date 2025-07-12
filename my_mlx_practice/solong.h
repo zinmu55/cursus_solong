@@ -3,6 +3,8 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
+# include <unistd.h> 
 # include "../minilibx_opengl_20191021/mlx.h"
 // # include "../minilibx-linux/mlx.h"
 

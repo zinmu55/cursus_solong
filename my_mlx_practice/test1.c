@@ -1,12 +1,4 @@
-#include <stdio.h>   // For file operations (fopen, fclose, getline, etc.)
-#include <stdlib.h>  // For memory allocation (malloc, free, exit)
-#include <string.h>  // For string operations (strlen, strchr, strdup)
-#include <unistd.h>  // For close()
-
-// MinilibXのヘッダーファイル
-// あなたの環境に合わせてパスを修正してください
-// 例: #include <X11/mlx.h> または #include "../minilibx_linux/mlx.h"
-#include "../minilibx-linux/mlx.h" 
+# include "./solong.h"
 
 // 定数
 #define TILE_SIZE 32 // 各タイルのピクセルサイズ (例: 32x32px)
