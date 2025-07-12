@@ -1,0 +1,40 @@
+/* XPM */
+static char *wall_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"32 32 1 1",
+/* colors */
+"a c #444444", /* 暗い灰色 */
+/* pixels */
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+};
