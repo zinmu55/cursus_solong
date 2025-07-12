@@ -1,6 +1,4 @@
-#include "../minilibx-linux/mlx.h"
-#include <stdio.h>
-#include <stdlib.h>
+# include "./solong.h"
 
 // パスを修正// MinilibXの構造体を定義（ゲームの状態を保持するため）
 // この struct は、フック関数に渡す情報をまとめるのに便利です。

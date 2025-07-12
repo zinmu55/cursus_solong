@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-// exit() のため// MinilibXのヘッダーファイルのパスをあなたの環境に合わせて修正
-// 例: #include "../minilibx-linux/mlx.h"
-#include "../minilibx-linux/mlx.h"
+# include "./solong.h"
 
 int	main(void)
 {
