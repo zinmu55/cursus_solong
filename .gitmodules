@@ -1,0 +1,3 @@
+[submodule "libft"]
+	path = libft
+	url = https://github.com/zinmu55/cursus_libft.git

@@ -17,6 +17,9 @@ CFLAGS :=	# -Wall -Wextra -Werror
 
 all : $(NAME)
 
+step : step.c
+	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
+
 step1 : step1.c
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
 #	cc step1.c -L../minilibx-linux -lmlx -lXext -lX11 -o step1
