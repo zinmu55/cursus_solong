@@ -1,5 +1,5 @@
 
-NAME := step1 step2 test1 test2
+NAME := step step1 step2 test1 test2
 SRCS := step1.c
 # # LINUX OS 用のフラグ
 # MLX_DIR := ../minilibx-linux
@@ -18,7 +18,7 @@ CFLAGS :=	# -Wall -Wextra -Werror
 all : $(NAME)
 
 step : step.c
-	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
+	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@ -L../libft -lft
 
 step1 : step1.c
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
