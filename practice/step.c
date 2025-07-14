@@ -4,6 +4,9 @@ typedef struct s_game
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*my_image;
+	int		img_width;
+	int		img_height;
 }			t_game;
 
 //	step2
@@ -30,23 +33,35 @@ int	key_press_hook(int keycode, t_game *game)
 //	step3
 int	draw_stuff(t_game *game)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	mlx_pixel_put(game->mlx_ptr, game->win_ptr, 400, 300, 0XFF0000);
 	i = 0;
 	j = 0;
-	while(i++ < 50)
+	while (i++ < 50)
 	{
-		while(j++ < 50)
+		while (j++ < 50)
 		{
-			mlx_pixel_put(game->mlx_ptr, game->win_ptr, 100 + i, 100 + j, 0x008800);
+			mlx_pixel_put(game->mlx_ptr, game->win_ptr, 100 + i, 100 + j,
+				0x008800);
 		}
 		j = 0;
 	}
-	return 0;
+	return (0);
 }
 
+// step4
+int	draw_image(t_game *game)
+{
+	// mlx_clear_window(game->mlx_ptr, game->win_ptr);
+	if (game->my_image)
+	{
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->my_image, 0,
+			0);
+	}
+	return (0);
+}
 
 int	main(void)
 {
@@ -62,8 +77,16 @@ int	main(void)
 	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
 	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
+	//	step3
 	draw_stuff(&game);
-	mlx_loop(game.mlx_ptr);	// what's this function ?
+	//	step4
+	game.my_image = mlx_xpm_file_to_image(game.mlx_ptr, c, &game.img_width, &game.img_height);
+	draw_image(&game);
+	mlx_loop(game.mlx_ptr); // what's this function ?
+	if (game.my_image)
+	{
+		mlx_destroy_image(game.mlx_ptr, game.my_image);
+	}
 	return (0);
 }
 
