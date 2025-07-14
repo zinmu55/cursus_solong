@@ -1,5 +1,4 @@
-# include "./solong.h"
-
+#include "./solong.h"
 
 // 定数
 #define TILE_SIZE 32 // 各タイルのピクセルサイズ (例: 32x32px)
@@ -235,7 +234,8 @@ void	check_elements(t_map *map)
 			}
 			else if (c != '0' && c != '1')
 			{
-				error_exit("Map contains invalid characters. (Allowed: 0, 1, P, E, C)");
+				error_exit("Map contains invalid characters. (Allowed: 0, 1, P,
+					E, C)");
 			}
 		}
 	}
@@ -287,8 +287,8 @@ void	load_images(t_game *game)
 			"./textures/collectible.xpm", &w, &h);
 	game->img_exit = mlx_xpm_file_to_image(game->mlx_ptr, "./textures/exit.xpm",
 			&w, &h);
-	if (!game->img_wall || !game->img_floor || !game->img_player ||
-		!game->img_collectible || !game->img_exit)
+	if (!game->img_wall || !game->img_floor || !game->img_player
+		|| !game->img_collectible || !game->img_exit)
 	{
 		// エラーが発生した場合、適切なクリーンアップをしてから終了
 		error_exit("Failed to load one or more XPM image files. Check paths and formats.");
@@ -338,7 +338,7 @@ int	render_map(t_game *game)
 			if (current_img)
 			{
 				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
-						current_img, x * TILE_SIZE, y * TILE_SIZE);
+					current_img, x * TILE_SIZE, y * TILE_SIZE);
 			}
 			x++;
 		}
@@ -375,7 +375,7 @@ void	try_move_player(t_game *game, int new_x, int new_y)
 		else
 		{
 			printf("You must collect all items before exiting! (%d remaining)\n",
-					game->map.collectible_count);
+				game->map.collectible_count);
 			return ; // アイテムが残っているので移動不可
 		}
 	}
@@ -384,7 +384,7 @@ void	try_move_player(t_game *game, int new_x, int new_y)
 	{
 		game->map.collectible_count--;
 		printf("Collected item! Items remaining: %d\n",
-				game->map.collectible_count);
+			game->map.collectible_count);
 	}
 	// 移動が許可された場合
 	// プレイヤーの古い位置を床に戻す
@@ -460,7 +460,7 @@ int	main(int argc, char **argv)
 		printf("%s\n", game_data.map.data[i]);
 	}
 	printf("Width: %d, Height: %d\n", game_data.map.width,
-			game_data.map.height);
+		game_data.map.height);
 	validate_map(&game_data.map); // バリデーションに成功したら続行
 	// --- MinilibXの初期化とウィンドウの準備 ---
 	game_data.mlx_ptr = mlx_init();
@@ -468,10 +468,8 @@ int	main(int argc, char **argv)
 	{
 		error_exit("Failed to initialize MiniLibX.");
 	}
-	game_data.win_ptr = mlx_new_window(game_data.mlx_ptr,
-										game_data.map.width * TILE_SIZE,
-										game_data.map.height * TILE_SIZE,
-										"So Long Game");
+	game_data.win_ptr = mlx_new_window(game_data.mlx_ptr, game_data.map.width
+			* TILE_SIZE, game_data.map.height * TILE_SIZE, "So Long Game");
 	if (!game_data.win_ptr)
 	{
 		error_exit("Failed to create window.");
