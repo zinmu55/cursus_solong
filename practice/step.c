@@ -1,6 +1,6 @@
 #include "./solong.h"
 
-#define	TILE_SIZE	32
+#define TILE_SIZE 32
 
 void	error_exit(char *message)
 {
@@ -9,7 +9,7 @@ void	error_exit(char *message)
 	exit(EXIT_FAILURE);
 }
 
-typedef	struct s_map
+typedef struct s_map
 {
 	char	**data;
 	int		width;
@@ -19,7 +19,7 @@ typedef	struct s_map
 	int		collective_count;
 	int		player_pos_x;
 	int		olayer_pos_y;
-}		t_map;
+}			t_map;
 
 // typedef	struct s_img
 // {
@@ -31,7 +31,6 @@ typedef	struct s_map
 // 	int		width;
 // 	int		height;
 // }	t_img;
-
 
 typedef struct s_game
 {
@@ -84,7 +83,7 @@ int	draw_stuff(t_game *game)
 		while (j++ < 50)
 		{
 			mlx_pixel_put(game->mlx_ptr, game->win_ptr, 100 + i, 100 + j,
-				0x008800);
+					0x008800);
 		}
 		j = 0;
 	}
@@ -97,34 +96,34 @@ int	draw_image(t_game *game)
 	// mlx_clear_window(game->mlx_ptr, game->win_ptr);
 	if (game->img_collectible)
 	{
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_collectible, 0,
-			0);
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+				game->img_collectible, 0, 0);
 	}
 	return (0);
 }
 
 void	read_map_from_file(const char *file_path, t_map *map)
 {
-	char	*LINE
+	char	*LINE;
 }
 
 //	render map
 int	render_map(t_game *game)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	void	*current_img;
 	char	cell;
 
 	y = 0;
-	while(y < game->map.height)
+	while (y < game->map.height)
 	{
 		x = 0;
 		while (x < game->map.width)
 		{
 			cell = game->map.data[y][x];
 			current_img = NULL;
-			if(cell == '1')
+			if (cell == '1')
 			{
 				current_img = game->img_wall;
 			}
@@ -146,14 +145,14 @@ int	render_map(t_game *game)
 			}
 			if (current_img)
 			{
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, current_img, x * TILE_SIZE, y * TILE_SIZE);
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+						current_img, x * TILE_SIZE, y * TILE_SIZE);
 			}
 			x++;
-			
 		}
 		y++;
 	}
-	return 0;
+	return (0);
 }
 
 int	main(void)
@@ -173,7 +172,8 @@ int	main(void)
 	//	step3
 	draw_stuff(&game);
 	//	step4
-	game.img_collectible = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/collectible.xpm", &game.img_width, &game.img_height);
+	game.img_collectible = mlx_xpm_file_to_image(game.mlx_ptr,
+			"./textures/collectible.xpm", &game.img_width, &game.img_height);
 	draw_image(&game);
 	mlx_loop(game.mlx_ptr); // what's this function ?
 	if (game.img_collectible)
