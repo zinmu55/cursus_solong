@@ -23,8 +23,6 @@ step : step.c
 step1 : step1.c
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
 #	cc step1.c -L../minilibx-linux -lmlx -lXext -lX11 -o step1
-#	cc step1.c -L../minilibx_linux -lmlx -lXext -lX11 -o step1
-
 
 step2 : step2.c
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@

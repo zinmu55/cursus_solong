@@ -234,8 +234,7 @@ void	check_elements(t_map *map)
 			}
 			else if (c != '0' && c != '1')
 			{
-				error_exit("Map contains invalid characters. (Allowed: 0, 1, P,
-					E, C)");
+				error_exit("Map contains invalid characters. (Allowed: 0, 1, P,E, C)");
 			}
 		}
 	}
