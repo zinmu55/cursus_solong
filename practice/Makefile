@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
+#    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/07/19 21:42:10 by skohtake         ###   ########.fr        #
+#    Updated: 2025/07/19 21:46:19 by shintarokoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,10 @@ SRCS := step1.c
 
 MLX_LIB := mlx
 
-# flag for LINUX
-MLX_DIR := ../minilibx_linux
-# # flag for Mac
-# MLX_DIR := ../minilibx_opengl_20191021/
+# # flag for LINUX
+# MLX_DIR := ../minilibx_linux
+# flag for Mac
+MLX_DIR := ../minilibx_opengl_20191021
 
 # # compilation flag for Linux(X11)
 # LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
@@ -50,6 +50,8 @@ CFLAGS :=	# -Wall -Wextra -Werror
 all : $(NAME)
 
 step : step.c
+	make -C ../libft
+	make -C ../libft clean
 	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft
 
 step1 : step1.c
