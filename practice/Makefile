@@ -6,7 +6,7 @@
 #    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/07/19 21:28:56 by skohtake         ###   ########.fr        #
+#    Updated: 2025/07/19 21:42:10 by skohtake         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,26 +14,35 @@
 NAME := step step1 step2 test1 test2
 SRCS := step1.c
 
-# # flag for LINUX
+MLX_LIB := mlx
+
+# flag for LINUX
 MLX_DIR := ../minilibx_linux
 # # flag for Mac
 # MLX_DIR := ../minilibx_opengl_20191021/
 
-MLX_LIB := mlx
-
-# compilation flag for Linux(X11)
-LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
+# # compilation flag for Linux(X11)
+# LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
 # # compilation flag for Mac
 # LFLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -framework Cocoa 
 
-# UNAME_S := $(shell uname) 
+UNAME_S := $(shell uname)
+
 # ifeq ($(UNAME_S), Darwin) 
-#     LFLAGS := -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -framework Cocoa 
+# 	MLX_DIR := ../minilibx_linux
 # else ifeq ($(UNAME_S), Linux)
-#     LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
+# 	MLX_DIR := ../minilibx_opengl_20191021
 # # else
 # # 	$(shell echo "Unsupported OS: " && echo $(UNAME_S))
 # endif
+
+ifeq ($(UNAME_S), Darwin) 
+	LFLAGS := -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -framework Cocoa
+else ifeq ($(UNAME_S), Linux)
+    LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
+# else
+# 	$(shell echo "Unsupported OS: " && echo $(UNAME_S))
+endif
 
 CC := cc
 CFLAGS :=	# -Wall -Wextra -Werror
