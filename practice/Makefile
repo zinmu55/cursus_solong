@@ -6,7 +6,7 @@
 #    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/07/19 21:46:19 by shintarokoh      ###   ########.fr        #
+#    Updated: 2025/07/22 09:03:13 by shintarokoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,10 +49,13 @@ CFLAGS :=	# -Wall -Wextra -Werror
 
 all : $(NAME)
 
+tmp : tmp.c
+	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
+
 step : step.c
 	make -C ../libft
 	make -C ../libft clean
-	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft
+	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintfgit
 
 step1 : step1.c
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
