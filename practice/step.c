@@ -226,7 +226,7 @@ void read_map_from_file(const char *file_path, t_game *game) // gameポインタ
 	close(fd);
 
     game->map.width = ft_strlen(game->map.data[0]);
-    game->map.height = i - 1;
+    game->map.height = i;
 	
 	i = 0;
 
