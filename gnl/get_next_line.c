@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 12:34:22 by skohtake          #+#    #+#             */
-/*   Updated: 2025/05/22 12:33:41 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/07/23 20:37:44 by shintarokoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,34 @@ char	*my_save(char *save)
 	return (new_save);
 }
 
+// char	*my_get_line(char *save)
+// {
+// 	char	*line;
+// 	int		i;
+
+// 	i = 0;
+// 	if (!save)
+// 		return (NULL);
+// 	while (save[i] != '\n' && save[i] != '\0')
+// 		i++;
+// 	if (save[i] != '\n')
+// 		line = (char *)malloc(sizeof(char) * (i + 2));
+// 	else
+// 		line = (char *)malloc(sizeof(char) * (i + 1));
+// 	if (!line)
+// 		return (NULL);
+// 	i = 0;
+// 	while (save[i] != '\n' && save[i] != '\0')
+// 	{
+// 		line[i] = save[i];
+// 		i++;
+// 	}
+// 	if (save[i] == '\n')
+// 		line[i++] = '\n';
+// 	line[i] = '\0';
+// 	return (line);
+// }
+
 char	*my_get_line(char *save)
 {
 	char	*line;
@@ -45,19 +73,17 @@ char	*my_get_line(char *save)
 	i = 0;
 	if (!save)
 		return (NULL);
-	while (save[i] != '\n' && save[i])
+	while (save[i] != '\n' && save[i] != '\0')
 		i++;
-	line = (char *)malloc(sizeof(char) * (i + 2));
+	line = (char *)malloc(sizeof(char) * (i + 1));
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (save[i] && save[i] != '\n')
+	while (save[i] != '\n' && save[i] != '\0')
 	{
 		line[i] = save[i];
 		i++;
 	}
-	if (save[i] == '\n')
-		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }

@@ -115,45 +115,120 @@ int	draw_image(t_game *game)
 // 	map->data[1][2] = '\0';
 // }
 
+void	free_double_ptr(char **ptr, size_t count)
+{
+	size_t	i;
+
+	i = 0;
+	if (count < 1)
+		return ;
+	while (i < count)
+	{
+		free(ptr[i]);
+		i++;
+	}
+	free(ptr);
+}
+
+char	**ft_stradd(char **double_array, char *new_str)
+{
+	char	**res;
+	size_t	i;
+	size_t	line_num;
+
+	line_num = 0;
+	while(double_array && double_array[line_num])
+	{
+		line_num++;
+	}
+	res = (char **)malloc(sizeof(char *) * (line_num + 2));
+	if(!res)
+	{
+		return NULL;
+	}
+	i = 0;
+	while(i < line_num)
+	{
+		res[i] = double_array[i];
+		i++;
+	}
+	if (new_str)
+	{
+		res[i++] = new_str;
+	}
+	else
+	{
+		res[i++] = NULL;
+	}
+	res[i] = NULL;
+	free(double_array);
+	return(res);
+}
+
 void read_map_from_file(const char *file_path, t_game *game) // gameポインタを受け取るように変更
 {
 	(void)file_path;
 
-    // 実際はfile_pathからマップサイズを読み込み、それに基づいてdataを確保する
-    // ここでは仮に2x2のマップを想定してハードコード
-    game->map.width = 2;
-    game->map.height = 2;
+    // // 実際はfile_pathからマップサイズを読み込み、それに基づいてdataを確保する
+    // // ここでは仮に2x2のマップを想定してハードコード
+    // game->map.width = 2;
+    // game->map.height = 2;
 
-    // map->data (char**) のためのメモリを確保（行ポインタの配列）
-    game->map.data = (char **)malloc(sizeof(char *) * game->map.height);
-    if (!game->map.data)
-        error_exit("Failed to allocate map rows");
+    // // map->data (char**) のためのメモリを確保（行ポインタの配列）
+    // game->map.data = (char **)malloc(sizeof(char *) * game->map.height);
+    // if (!game->map.data)
+    //     error_exit("Failed to allocate map rows");
 
-    int i = 0;
-    while (i < game->map.height)
-    {
-        // 各行（char*）のためのメモリを確保
-        // +1 はヌル終端文字のため (C文字列として扱う場合)
-        game->map.data[i] = (char *)malloc(sizeof(char) * (game->map.width + 1));
-        if (!game->map.data[i])
-        {
-            // 途中でメモリ確保失敗した場合、それまでに確保したメモリを解放する
-            while (--i >= 0)
-                free(game->map.data[i]);
-            free(game->map.data);
-            error_exit("Failed to allocate map columns");
-        }
-        i++;
-    }
+    // int i = 0;
+    // while (i < game->map.height)
+    // {
+    //     // 各行（char*）のためのメモリを確保
+    //     // +1 はヌル終端文字のため (C文字列として扱う場合)
+    //     game->map.data[i] = (char *)malloc(sizeof(char) * (game->map.width + 1));
+    //     if (!game->map.data[i])
+    //     {
+    //         // 途中でメモリ確保失敗した場合、それまでに確保したメモリを解放する
+    //         while (--i >= 0)
+    //             free(game->map.data[i]);
+    //         free(game->map.data);
+    //         error_exit("Failed to allocate map columns");
+    //     }
+    //     i++;
+    // }
 
-    // マップデータを代入 (ここをファイル読み込みロジックに置き換える)
-    game->map.data[0][0] = '1';
-    game->map.data[0][1] = '0';
-    game->map.data[0][2] = '\0'; // C文字列として終端
+    // // マップデータを代入 (ここをファイル読み込みロジックに置き換える)
+    // game->map.data[0][0] = '1';
+    // game->map.data[0][1] = '0';
+    // game->map.data[0][2] = '\0'; // C文字列として終端
 
-    game->map.data[1][0] = 'P';
-    game->map.data[1][1] = 'E';
-    game->map.data[1][2] = '\0'; // C文字列として終端
+    // game->map.data[1][0] = 'P';
+    // game->map.data[1][1] = 'E';
+    // game->map.data[1][2] = '\0'; // C文字列として終端
+
+	int fd;
+	int i;
+	char *tmp_line;
+
+	fd = open("./map/test.ber", O_RDONLY);
+	game->map.data = NULL;
+	i = 0;
+
+	while (1)
+	{
+		tmp_line = get_next_line(fd);
+		ft_printf("	tmp_line:%s\n", tmp_line);
+		
+		game->map.data = ft_stradd(game->map.data, tmp_line);
+		if(!tmp_line)
+			break;
+		ft_printf("	map.data:%s\n", game->map.data[i++]);
+	}
+	close(fd);
+
+    game->map.width = ft_strlen(game->map.data[0]);
+    game->map.height = i - 1;
+	
+	i = 0;
 
     // // プレイヤー位置など、他のマップ情報も設定
     // game->map.player_pos_x = 0; // 例
@@ -223,13 +298,29 @@ int	main(void)
 	if (game.win_ptr == NULL)
 		return (1);
 	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
+	
+	// //	step3
+	// draw_stuff(&game);
+
+	//	step4
+	game.img_wall = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/wall.xpm", &game.img_width, &game.img_height);
+    if (!game.img_wall)
+		error_exit("Failed to load wall image");
+    game.img_floor = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/floor.xpm", &game.img_width, &game.img_height);
+    if (!game.img_floor)
+		error_exit("Failed to load floor image");
+    game.img_player = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/player.xpm", &game.img_width, &game.img_height);
+    if (!game.img_player)
+		error_exit("Failed to load player image");
+    game.img_collectible = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/collectible.xpm", &game.img_width, &game.img_height);
+    if (!game.img_collectible)
+		error_exit("Failed to load collectible image");
+    game.img_exit = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/exit.xpm", &game.img_width, &game.img_height);
+    if (!game.img_exit)
+		error_exit("Failed to load exit image");
 	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
-	//	step3
-	draw_stuff(&game);
-	//	step4
-	game.img_collectible = mlx_xpm_file_to_image(game.mlx_ptr,
-			"./textures/collectible.xpm", &game.img_width, &game.img_height);
+	
 	// draw_image(&game);
 	read_map_from_file("", &game);
 	render_map(&game);

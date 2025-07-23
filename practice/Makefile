@@ -6,7 +6,7 @@
 #    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/07/22 09:03:13 by shintarokoh      ###   ########.fr        #
+#    Updated: 2025/07/22 21:48:27 by shintarokoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,9 +53,9 @@ tmp : tmp.c
 	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
 
 step : step.c
-	make -C ../libft
-	make -C ../libft clean
-	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintfgit
+# 	make -C ../libft
+# 	make -C ../libft clean
+	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
 
 step1 : step1.c
 	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
