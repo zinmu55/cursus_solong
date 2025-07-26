@@ -1,15 +1,11 @@
 #include "./solong.h"
 
-#define TILE_SIZE 32
-
 void	error_exit(char *message)
 {
 	ft_putstr_fd(" --- error exit --- ", STDOUT_FILENO);
 	ft_putendl_fd(message, STDOUT_FILENO);
 	exit(EXIT_FAILURE);
 }
-
-
 
 void	my_print_map(char **mapdata)
 {
@@ -37,13 +33,57 @@ int	close_window_hook(t_game *game)
 int	key_press_hook(int keycode, t_game *game)
 {
 	ft_putendl_fd(" --- key press hook --- ", STDOUT_FILENO);
-	if (keycode == 65307) // Linux
+	if (keycode == KEY_ESC) // Linux
+	// if (keycode == 65307) // Linux
 	// if(keycode == 53)	//mac
 	{
 		ft_putendl_fd(" --- ESC key : window close hook --- ", STDOUT_FILENO);
 		close_window_hook(game);
 	}
+	else if(keycode == KEY_W)
+	{
+		move_player(game, 0, -1);
+	}
+	else if(keycode == KEY_S)
+	{
+		move_player(game, 0, 1);
+	}
+	else if(keycode == KEY_A)
+	{
+		move_player(game, -1, 0);
+	}
+	else if(keycode == KEY_D)
+	{
+		move_player(game, 1, 0);
+	}
 	return (0);
+}
+
+void free_map_data(t_map *map)
+{
+	if (map->data)
+	{
+		free_double_ptr(map->data, map->height);
+		map->data = NULL;
+	}
+}
+
+void destroy_game_resources(t_game *game)
+{
+	if (game->img_wall)
+		mlx_destroy_image(game->mlx_ptr, game->img_wall);
+	if (game->img_floor)
+		mlx_destroy_image(game->mlx_ptr, game->img_floor);
+	if (game->img_player)
+		mlx_destroy_image(game->mlx_ptr, game->img_player);
+	if (game->img_collectible)
+		mlx_destroy_image(game->mlx_ptr, game->img_collectible);
+	if (game->img_exit)
+		mlx_destroy_image(game->mlx_ptr, game->img_exit);
+	if (game->win_ptr)
+		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+
+	free_map_data(&(game->map));
 }
 
 //	step3
@@ -59,8 +99,7 @@ int	draw_stuff(t_game *game)
 	{
 		while (j++ < 50)
 		{
-			mlx_pixel_put(game->mlx_ptr, game->win_ptr, 100 + i, 100 + j,
-					0x008800);
+			mlx_pixel_put(game->mlx_ptr, game->win_ptr, 100 + i, 100 + j, 0x008800);
 		}
 		j = 0;
 	}
@@ -490,6 +529,66 @@ void	validate_playability(t_game *game)
 	free_double_ptr(grid_copy, game->map.height);
 }
 
+int	is_valid_move_position(t_map *map, int x, int y)
+{
+	if (x < 0 || x >= map->width || y < 0 || y >= map->height)
+		return (0);
+	if (map->data[y][x] == '1')
+		return (0);
+	return (1);
+}
+
+void handle_game_clear(t_game *game)
+{
+	ft_printf(" --- Congratulations! You cleared the game! --- ");
+	ft_printf(" Total moves: %d\n", game->move_count);
+	close_window_hook(game);
+}
+
+int move_player(t_game *game, int dx, int dy)
+{
+	int new_player_pos_x;
+	int new_player_pos_y;
+	char target_cell;
+
+	new_player_pos_x = game->map.player_pos_x + dx;
+	new_player_pos_y = game->map.player_pos_y + dy;
+
+	if(!is_valid_move_position(&(game->map),new_player_pos_x, new_player_pos_y))
+	{
+		return (0);
+	}
+	target_cell = game->map.data[new_player_pos_y][new_player_pos_x];
+	if(target_cell == EXIT)
+	{
+		if(game->map.collectible_count == 0)
+		{
+			game->move_count++;
+			ft_printf("counts of moves: %d\n", game->move_count);
+			handle_game_clear(game);
+		}
+		else
+		{
+			ft_printf("You need to collect all items before exiting!\n");
+			return (0);
+		}
+	}
+	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = FLOOR;
+	game->map.player_pos_x = new_player_pos_x;
+	game->map.player_pos_x = new_player_pos_y;
+	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = PLAYER;
+
+	if(target_cell == COLLECTIBLE)
+	{
+		game->map.collectible_count--;
+		ft_printf("You've got an item! You need to get %d more items.\n", game->map.collectible_count);
+	}
+	game->move_count++;
+	ft_printf("counts of moves: %d\n", game->move_count);
+	render_map(game);
+	return (1);
+}
+
 int	main(void)
 {
 	t_game	game;
@@ -523,6 +622,7 @@ int	main(void)
 			&game.img_width, &game.img_height);
 	if (!game.img_exit)
 		error_exit("Failed to load exit image");
+	game.move_count = 0;
 	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
 	// draw_image(&game);

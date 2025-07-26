@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/07/26 21:10:28 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:00:51 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct s_queue
 	int					size;
 }						t_queue;
 
+# define TILE_SIZE 32
+
 # define WALL '1'
 # define FLOOR '0'
 # define PLAYER 'P'
@@ -104,6 +106,40 @@ typedef struct s_queue
 #  define KEY_D 2
 
 # endif
+
+void	error_exit(char *message);
+void	read_map_from_file(const char *file_path, t_game *game);
+char	**ft_stradd(char **double_array, char *new_str);
+void	free_double_ptr(char **ptr, size_t count);
+
+void	check_walls(t_map *map);
+void	check_elements(t_map *map);
+void	validate_map(t_map *map);
+
+// flood_fill_validation.c
+void	my_flood_fill(char **grid, int width, int height, int x, int y);
+bool	is_valid_position_to_fill(char **grid, int width, int height, int x, int y);
+bool	map_includes_specific_char(char **grid, int width, int height, char c);
+void	validate_playability(t_game *game);
+
+// player_moves.c
+int		is_valid_move_position(t_map *map, int x, int y);
+void	handle_game_clear(t_game *game);
+int		move_player(t_game *game, int dx, int dy);
+
+// hooks.c (または main.c)
+int		close_window_hook(t_game *game);
+int		key_press_hook(int keycode, t_game *game);
+
+// render.c
+int		render_map(t_game *game);
+int		draw_stuff(t_game *game);
+int		draw_image(t_game *game);
+
+// utility.c (または general utilities)
+void	my_print_map(char **mapdata);
+void	free_map_data(t_map *map);
+void	destroy_game_resources(t_game *game);
 
 // // movement keycode for Linux (X11)
 // # define KEY_ESC 65307
