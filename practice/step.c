@@ -183,10 +183,6 @@ void	read_map_from_file(const char *file_path, t_game *game)
 {
 	(void)file_path;
 
-	// // 実際はfile_pathからマップサイズを読み込み、それに基づいてdataを確保する
-	// // ここでは仮に2x2のマップを想定してハードコード
-	// game->map.width = 2;
-	// game->map.height = 2;
 
 	// // map->data (char**) のためのメモリを確保（行ポインタの配列）
 	// game->map.data = (char **)malloc(sizeof(char *) * game->map.height);
@@ -199,59 +195,50 @@ void	read_map_from_file(const char *file_path, t_game *game)
 	//     // 各行（char*）のためのメモリを確保
 	//     // +1 はヌル終端文字のため (C文字列として扱う場合)
 	//     game->map.data[i] = (char *)malloc(sizeof(char) * (game->map.width + 1));
-				//     if (!game->map.data[i])
-				//     {
-				//         // 途中でメモリ確保失敗した場合、それまでに確保したメモリを解放する
-				//         while (--i >= 0)
-				//             free(game->map.data[i]);
-				//         free(game->map.data);
-				//         error_exit("Failed to allocate map columns");
-				//     }
-				//     i++;
-				// }
+	//     if (!game->map.data[i])
+	//     {
+	//         // 途中でメモリ確保失敗した場合、それまでに確保したメモリを解放する
+	//         while (--i >= 0)
+	//             free(game->map.data[i]);
+	//         free(game->map.data);
+	//         error_exit("Failed to allocate map columns");
+	//     }
+	//     i++;
+	// }
 
-				// // マップデータを代入 (ここをファイル読み込みロジックに置き換える)
-				// game->map.data[0][0] = '1';
-				// game->map.data[0][1] = '0';
-				// game->map.data[0][2] = '\0'; // C文字列として終端
+	int fd;
+	int i;
+	char *tmp_line;
 
-				// game->map.data[1][0] = 'P';
-				// game->map.data[1][1] = 'E';
-				// game->map.data[1][2] = '\0'; // C文字列として終端
+	fd = open("./map/test.ber", O_RDONLY);
+	game->map.data = NULL;
+	i = 0;
 
-				int fd;
-				int i;
-				char *tmp_line;
+	while (1)
+	{
+		tmp_line = get_next_line(fd);
+		// ft_printf("	tmp_line:%s\n", tmp_line);
 
-				fd = open("./map/test.ber", O_RDONLY);
-				game->map.data = NULL;
-				i = 0;
+		game->map.data = ft_stradd(game->map.data, tmp_line);
+		if (!tmp_line)
+			break ;
+		ft_printf("	each line of map.data : %s\n", game->map.data[i]);
+		i++;
+	}
+	my_print_map(game->map.data);
+	close(fd);
 
-				while (1)
-				{
-					tmp_line = get_next_line(fd);
-					// ft_printf("	tmp_line:%s\n", tmp_line);
+	game->map.width = ft_strlen(game->map.data[0]);
+	game->map.height = i;
 
-					game->map.data = ft_stradd(game->map.data, tmp_line);
-					if (!tmp_line)
-						break ;
-					ft_printf("	each line of map.data : %s\n", game->map.data[i]);
-					i++;
-				}
-				my_print_map(game->map.data);
-				close(fd);
+	i = 0;
 
-				game->map.width = ft_strlen(game->map.data[0]);
-				game->map.height = i;
-
-				i = 0;
-
-				// // プレイヤー位置など、他のマップ情報も設定
-				// game->map.player_pos_x = 0; // 例
-				// game->map.player_pos_y = 0; // 例
-				// game->map.player_count = 1; // 例
-				// game->map.exit_count = 1; // 例
-				// game->map.collective_count = 1; // 例
+	// // プレイヤー位置など、他のマップ情報も設定
+	// game->map.player_pos_x = 0; // 例
+	// game->map.player_pos_y = 0; // 例
+	// game->map.player_count = 1; // 例
+	// game->map.exit_count = 1; // 例
+	// game->map.collective_count = 1; // 例
 }
 
 //	render map
