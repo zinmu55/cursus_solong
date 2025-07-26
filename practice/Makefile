@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
+#    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/07/26 20:12:20 by skohtake         ###   ########.fr        #
+#    Updated: 2025/07/26 22:39:18 by shintarokoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,9 +55,9 @@ tmp : tmp.c
 	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
 
 linker :
-	make -C ../libft
-	make -C ../gnl
-	make -C ../ft_printf
+	make -C ../libft re
+	make -C ../gnl re
+	make -C ../ft_printf re
 	make -C ../libft clean
 	make -C ../gnl clean
 	make -C ../ft_printf clean
