@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/07/26 20:32:07 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:10:28 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,45 @@
 
 // # include "../minilibx-linux/mlx.h"
 
+typedef struct s_map
+{
+	char	**data;
+	int		width;
+	int		height;
+	int		player_count;
+	int		exit_count;
+	int		collectible_count;
+	int		player_pos_x;
+	int		player_pos_y;
+}			t_map;
+
+// typedef	struct s_img
+// {
+// 	void	*wall_img;
+// 	void	*floor_img;
+// 	void	*player_img;
+// 	void	*collectible_img;
+// 	void	*exit_img;
+// 	int		width;
+// 	int		height;
+// }	t_img;
+
+typedef struct s_game
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_map	map;
+	int		move_count;
+	// t_img	img;
+	void	*img_wall;
+	void	*img_floor;
+	void	*img_player;
+	void	*img_collectible;
+	void	*img_exit;
+	int		img_width;
+	int		img_height;
+}			t_game;
+
 typedef struct s_queue_node
 {
 	int					x;
@@ -38,6 +77,17 @@ typedef struct s_queue
 	t_queue_node		*rear;
 	int					size;
 }						t_queue;
+
+# define WALL '1'
+# define FLOOR '0'
+# define PLAYER 'P'
+# define COLLECTIBLE 'C'
+# define EXIT 'E'
+# define VISITED 'V'
+# define UP 0
+# define DOWN 1
+# define LEFT 2
+# define RIGHT 3
 
 # if defined(__linux__)
 #  define KEY_ESC 65307

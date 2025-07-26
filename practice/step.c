@@ -9,44 +9,7 @@ void	error_exit(char *message)
 	exit(EXIT_FAILURE);
 }
 
-typedef struct s_map
-{
-	char	**data;
-	int		width;
-	int		height;
-	int		player_count;
-	int		exit_count;
-	int		collectible_count;
-	int		player_pos_x;
-	int		player_pos_y;
-}			t_map;
 
-// typedef	struct s_img
-// {
-// 	void	*wall_img;
-// 	void	*floor_img;
-// 	void	*player_img;
-// 	void	*collectible_img;
-// 	void	*exit_img;
-// 	int		width;
-// 	int		height;
-// }	t_img;
-
-typedef struct s_game
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_map	map;
-	int		move_count;
-	// t_img	img;
-	void	*img_wall;
-	void	*img_floor;
-	void	*img_player;
-	void	*img_collectible;
-	void	*img_exit;
-	int		img_width;
-	int		img_height;
-}			t_game;
 
 void	my_print_map(char **mapdata)
 {
@@ -429,16 +392,7 @@ void	validate_map(t_map *map)
 // 		return(temp);
 // }
 
-#define WALL '1'
-#define FLOOR '0'
-#define PLAYER 'P'
-#define COLLECTIBLE 'C'
-#define EXIT 'E'
-#define VISITED 'V'
-#define UP 0
-#define DOWN 1
-#define LEFT 2
-#define RIGHT 3
+
 
 bool	is_valid_position_to_fill(char **grid, int width, int height, int x,
 		int y)
