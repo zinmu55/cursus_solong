@@ -3,7 +3,7 @@ static char *collectible_xpm[] = {
 /* width height num_colors chars_per_pixel */
 "32 32 2 1",
 /* colors */
-"Y c #FFFF00", /* Yellow */
+"Y c #FF8800", /* Yellow */
 "W c #FFFFFF", /* White */
 /* pixels */
 "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
