@@ -42,18 +42,22 @@ int	key_press_hook(int keycode, t_game *game)
 	}
 	else if(keycode == KEY_W)
 	{
+		ft_printf(" --- W key was pressed. --- \n");
 		move_player(game, 0, -1);
 	}
 	else if(keycode == KEY_S)
 	{
+		ft_printf(" --- S key was pressed. --- \n");
 		move_player(game, 0, 1);
 	}
 	else if(keycode == KEY_A)
 	{
+		ft_printf(" --- A key was pressed. --- \n");
 		move_player(game, -1, 0);
 	}
 	else if(keycode == KEY_D)
 	{
+		ft_printf(" --- D key was pressed. --- \n");
 		move_player(game, 1, 0);
 	}
 	return (0);
@@ -512,14 +516,12 @@ void	validate_playability(t_game *game)
 	p_y = game->map.player_pos_y;
 	my_flood_fill(grid_copy, game->map.width, game->map.height, p_x, p_y);
 	ft_printf(" --- printing map after my_flood_fill ---\n");
-	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height,
-			COLLECTIBLE))
+	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height, COLLECTIBLE))
 	{
 		free_double_ptr(grid_copy, game->map.height);
 		error_exit("Map is not playable: Not all collectibles are reachable.");
 	}
-	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height,
-			EXIT))
+	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height, EXIT))
 	{
 		my_print_map(grid_copy); // you must remove this line
 		free_double_ptr(grid_copy, game->map.height);
@@ -575,7 +577,7 @@ int move_player(t_game *game, int dx, int dy)
 	}
 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = FLOOR;
 	game->map.player_pos_x = new_player_pos_x;
-	game->map.player_pos_x = new_player_pos_y;
+	game->map.player_pos_y = new_player_pos_y;
 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = PLAYER;
 
 	if(target_cell == COLLECTIBLE)
