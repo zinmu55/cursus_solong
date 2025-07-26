@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
+#    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/07/22 21:48:27 by shintarokoh      ###   ########.fr        #
+#    Updated: 2025/07/26 20:12:20 by skohtake         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ MLX_LIB := mlx
 # # flag for LINUX
 # MLX_DIR := ../minilibx_linux
 # flag for Mac
-MLX_DIR := ../minilibx_opengl_20191021
+# MLX_DIR := ../minilibx_opengl_20191021
 
 # # compilation flag for Linux(X11)
 # LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
@@ -37,8 +37,10 @@ UNAME_S := $(shell uname)
 # endif
 
 ifeq ($(UNAME_S), Darwin) 
-	LFLAGS := -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -framework Cocoa
+	MLX_DIR := ../minilibx_opengl_20191021
+	LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB)  -framework OpenGL -framework AppKit -framework Cocoa
 else ifeq ($(UNAME_S), Linux)
+	MLX_DIR := ../minilibx_linux
     LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
 # else
 # 	$(shell echo "Unsupported OS: " && echo $(UNAME_S))
@@ -51,6 +53,14 @@ all : $(NAME)
 
 tmp : tmp.c
 	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
+
+linker :
+	make -C ../libft
+	make -C ../gnl
+	make -C ../ft_printf
+	make -C ../libft clean
+	make -C ../gnl clean
+	make -C ../ft_printf clean
 
 step : step.c
 # 	make -C ../libft
