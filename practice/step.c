@@ -48,18 +48,18 @@ typedef struct s_game
 	int		img_height;
 }			t_game;
 
-void my_print_map(char **mapdata)
+void	my_print_map(char **mapdata)
 {
-    int y;
+	int	y;
 
-    ft_printf(" --- Current Map State --- \n");
-    y = 0;
-    while (mapdata[y])
-    {
-        ft_printf("%s\n", mapdata[y]);
-        y++;
-    }
-    ft_printf(" ------------------------- \n");
+	ft_printf(" --- Current Map State --- \n");
+	y = 0;
+	while (mapdata[y])
+	{
+		ft_printf("%s\n", mapdata[y]);
+		y++;
+	}
+	ft_printf(" ------------------------- \n");
 }
 
 //	step2
@@ -110,8 +110,7 @@ int	draw_image(t_game *game)
 	// mlx_clear_window(game->mlx_ptr, game->win_ptr);
 	if (game->img_collectible)
 	{
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
-				game->img_collectible, 0, 0);
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_collectible, 0, 0);
 	}
 	return (0);
 }
@@ -151,17 +150,17 @@ char	**ft_stradd(char **double_array, char *new_str)
 	size_t	line_num;
 
 	line_num = 0;
-	while(double_array && double_array[line_num])
+	while (double_array && double_array[line_num])
 	{
 		line_num++;
 	}
 	res = (char **)malloc(sizeof(char *) * (line_num + 2));
-	if(!res)
+	if (!res)
 	{
-		return NULL;
+		return (NULL);
 	}
 	i = 0;
-	while(i < line_num)
+	while (i < line_num)
 	{
 		res[i] = double_array[i];
 		i++;
@@ -176,82 +175,83 @@ char	**ft_stradd(char **double_array, char *new_str)
 	}
 	res[i] = NULL;
 	free(double_array);
-	return(res);
+	return (res);
 }
 
-void read_map_from_file(const char *file_path, t_game *game) // gameポインタを受け取るように変更
+void	read_map_from_file(const char *file_path, t_game *game)
+// gameポインタを受け取るように変更
 {
 	(void)file_path;
 
-    // // 実際はfile_pathからマップサイズを読み込み、それに基づいてdataを確保する
-    // // ここでは仮に2x2のマップを想定してハードコード
-    // game->map.width = 2;
-    // game->map.height = 2;
+	// // 実際はfile_pathからマップサイズを読み込み、それに基づいてdataを確保する
+	// // ここでは仮に2x2のマップを想定してハードコード
+	// game->map.width = 2;
+	// game->map.height = 2;
 
-    // // map->data (char**) のためのメモリを確保（行ポインタの配列）
-    // game->map.data = (char **)malloc(sizeof(char *) * game->map.height);
-    // if (!game->map.data)
-    //     error_exit("Failed to allocate map rows");
+	// // map->data (char**) のためのメモリを確保（行ポインタの配列）
+	// game->map.data = (char **)malloc(sizeof(char *) * game->map.height);
+	// if (!game->map.data)
+	//     error_exit("Failed to allocate map rows");
 
-    // int i = 0;
-    // while (i < game->map.height)
-    // {
-    //     // 各行（char*）のためのメモリを確保
-    //     // +1 はヌル終端文字のため (C文字列として扱う場合)
-    //     game->map.data[i] = (char *)malloc(sizeof(char) * (game->map.width + 1));
-    //     if (!game->map.data[i])
-    //     {
-    //         // 途中でメモリ確保失敗した場合、それまでに確保したメモリを解放する
-    //         while (--i >= 0)
-    //             free(game->map.data[i]);
-    //         free(game->map.data);
-    //         error_exit("Failed to allocate map columns");
-    //     }
-    //     i++;
-    // }
+	// int i = 0;
+	// while (i < game->map.height)
+	// {
+	//     // 各行（char*）のためのメモリを確保
+	//     // +1 はヌル終端文字のため (C文字列として扱う場合)
+	//     game->map.data[i] = (char *)malloc(sizeof(char) * (game->map.width + 1));
+				//     if (!game->map.data[i])
+				//     {
+				//         // 途中でメモリ確保失敗した場合、それまでに確保したメモリを解放する
+				//         while (--i >= 0)
+				//             free(game->map.data[i]);
+				//         free(game->map.data);
+				//         error_exit("Failed to allocate map columns");
+				//     }
+				//     i++;
+				// }
 
-    // // マップデータを代入 (ここをファイル読み込みロジックに置き換える)
-    // game->map.data[0][0] = '1';
-    // game->map.data[0][1] = '0';
-    // game->map.data[0][2] = '\0'; // C文字列として終端
+				// // マップデータを代入 (ここをファイル読み込みロジックに置き換える)
+				// game->map.data[0][0] = '1';
+				// game->map.data[0][1] = '0';
+				// game->map.data[0][2] = '\0'; // C文字列として終端
 
-    // game->map.data[1][0] = 'P';
-    // game->map.data[1][1] = 'E';
-    // game->map.data[1][2] = '\0'; // C文字列として終端
+				// game->map.data[1][0] = 'P';
+				// game->map.data[1][1] = 'E';
+				// game->map.data[1][2] = '\0'; // C文字列として終端
 
-	int fd;
-	int i;
-	char *tmp_line;
+				int fd;
+				int i;
+				char *tmp_line;
 
-	fd = open("./map/test.ber", O_RDONLY);
-	game->map.data = NULL;
-	i = 0;
+				fd = open("./map/test.ber", O_RDONLY);
+				game->map.data = NULL;
+				i = 0;
 
-	while (1)
-	{
-		tmp_line = get_next_line(fd);
-		// ft_printf("	tmp_line:%s\n", tmp_line);
-		
-		game->map.data = ft_stradd(game->map.data, tmp_line);
-		if(!tmp_line)
-			break;
-		ft_printf("	each line of map.data : %s\n", game->map.data[i]);
-		i++;
-	}
-	my_print_map(game->map.data);
-	close(fd);
+				while (1)
+				{
+					tmp_line = get_next_line(fd);
+					// ft_printf("	tmp_line:%s\n", tmp_line);
 
-    game->map.width = ft_strlen(game->map.data[0]);
-    game->map.height = i;
-	
-	i = 0;
+					game->map.data = ft_stradd(game->map.data, tmp_line);
+					if (!tmp_line)
+						break ;
+					ft_printf("	each line of map.data : %s\n", game->map.data[i]);
+					i++;
+				}
+				my_print_map(game->map.data);
+				close(fd);
 
-    // // プレイヤー位置など、他のマップ情報も設定
-    // game->map.player_pos_x = 0; // 例
-    // game->map.player_pos_y = 0; // 例
-    // game->map.player_count = 1; // 例
-    // game->map.exit_count = 1; // 例
-    // game->map.collective_count = 1; // 例
+				game->map.width = ft_strlen(game->map.data[0]);
+				game->map.height = i;
+
+				i = 0;
+
+				// // プレイヤー位置など、他のマップ情報も設定
+				// game->map.player_pos_x = 0; // 例
+				// game->map.player_pos_y = 0; // 例
+				// game->map.player_count = 1; // 例
+				// game->map.exit_count = 1; // 例
+				// game->map.collective_count = 1; // 例
 }
 
 //	render map
@@ -292,8 +292,7 @@ int	render_map(t_game *game)
 			}
 			if (current_img)
 			{
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
-						current_img, x * TILE_SIZE, y * TILE_SIZE);
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, current_img, x * TILE_SIZE, y * TILE_SIZE);
 			}
 			x++;
 		}
@@ -302,92 +301,91 @@ int	render_map(t_game *game)
 	return (0);
 }
 
-void check_walls(t_map *map)
+void	check_walls(t_map *map)
 {
 	int	x;
 	int	y;
 
-	x=0;
-	y=0;
-
-	while(x++ < map->width - 1)
+	x = 0;
+	y = 0;
+	while (x++ < map->width - 1)
 	{
-		if(map->data[0][x] != '1' || map->data[map->height - 1][x] != '1')
+		if (map->data[0][x] != '1' || map->data[map->height - 1][x] != '1')
 		{
 			ft_printf(" x = %d \n", x);
 			error_exit("walls check error (top or bottom)");
 		}
 	}
-	while(y++ < map->height - 1)
+	while (y++ < map->height - 1)
 	{
-		if(map->data[y][0] != '1' || map->data[y][map->width - 1] != '1')
+		if (map->data[y][0] != '1' || map->data[y][map->width - 1] != '1')
 		{
 			error_exit("walls check error (both sides)");
 		}
 	}
 	// ft_printf("walls check is OK. \n", x);
-
 }
 
-void check_elements(t_map *map) {
-    int x;
-	int	y;
+void	check_elements(t_map *map)
+{
+	int		x;
+	int		y;
+	char	c;
 
 	x = 0;
 	y = 0;
-
-    map->player_count = 0;
-    map->exit_count = 0;
-    map->collectible_count = 0;
-
-	while(y++ < map->height - 1 )
-    {
-        while (x++ < map->width - 1) 
+	map->player_count = 0;
+	map->exit_count = 0;
+	map->collectible_count = 0;
+	while (y++ < map->height - 1)
+	{
+		while (x++ < map->width - 1)
 		{
-            char c = map->data[y][x];
-            if (c == 'P') 
+			c = map->data[y][x];
+			if (c == 'P')
 			{
-                map->player_count++;
+				map->player_count++;
 				map->player_pos_x = x;
 				map->player_pos_y = y;
-            } 
-			else if (c == 'E') 
+			}
+			else if (c == 'E')
 			{
-                map->exit_count++;
-            } 
-			else if (c == 'C') 
+				map->exit_count++;
+			}
+			else if (c == 'C')
 			{
-                map->collectible_count++;
-            } 
-			else if (c != '0' && c != '1') 
+				map->collectible_count++;
+			}
+			else if (c != '0' && c != '1')
 			{
-                error_exit("Map contains invalid characters. (Allowed: 0, 1, P, E, C)");
-            }
+				error_exit("Map contains invalid characters. (Allowed: 0, 1, P, E, C) ");
+			}
 			// ft_printf(" x:%d,y:%d \n", x, y);
-        }
+		}
 		x = 0;
-    }
-
-    if (map->player_count != 1) 
+	}
+	if (map->player_count != 1)
 	{
-        ft_printf(" player_count : %d \n",map->player_count);
+		ft_printf(" player_count : %d \n", map->player_count);
 		error_exit("Map must contain exactly one player ('P').");
-    }
-    if (map->exit_count != 1) {
-        error_exit("Map must contain exactly one exit ('E').");
-    }
-    if (map->collectible_count < 1) {
-        error_exit("Map must contain at least one collectible ('C').");
-    }
+	}
+	if (map->exit_count != 1)
+	{
+		error_exit("Map must contain exactly one exit ('E').");
+	}
+	if (map->collectible_count < 1)
+	{
+		error_exit("Map must contain at least one collectible ('C').");
+	}
 }
 
-void validate_map(t_map *map)
+void	validate_map(t_map *map)
 {
-    ft_printf(" --- Validating map --- \n");
-    check_walls(map);
-    check_elements(map);
-    // check_path_existence(map); 
-    printf(" --- Map validation successful ---\n");
+	ft_printf(" --- Validating map --- \n");
+	check_walls(map);
+	check_elements(map);
+	// check_path_existence(map);
+	printf(" --- Map validation successful ---\n");
 }
 
 // path check
@@ -444,42 +442,41 @@ void validate_map(t_map *map)
 // 		return(temp);
 // }
 
-#define	WALL '1'
-#define	FLOOR '0'
-#define	PLAYER 'P'
-#define	COLLECTIBLE 'C'
-#define	EXIT 'E'
-#define	VISITED	'V'
-#define	UP 0
-#define	DOWN 1
-#define	LEFT 2
-#define	RIGHT 3
+#define WALL '1'
+#define FLOOR '0'
+#define PLAYER 'P'
+#define COLLECTIBLE 'C'
+#define EXIT 'E'
+#define VISITED 'V'
+#define UP 0
+#define DOWN 1
+#define LEFT 2
+#define RIGHT 3
 
-bool	is_valid_position_to_fill(char **grid, int width, int height, int x, int y)
+bool	is_valid_position_to_fill(char **grid, int width, int height, int x,
+		int y)
 {
 	if (x < 0 || x >= width || y < 0 || y >= height)
-		return(false);
-	if(grid[y][x] == WALL || grid[y][x] == VISITED)
-		return(false);
-	return(true);
+		return (false);
+	if (grid[y][x] == WALL || grid[y][x] == VISITED)
+		return (false);
+	return (true);
 }
 
-
-void my_flood_fill(char **grid, int width, int height, int x, int y)
+void	my_flood_fill(char **grid, int width, int height, int x, int y)
 {
-	int dx[] = {0, 0, -1, 1};
-	int dy[] = {-1, 1, 0, 0};
+	int	dx[] = {0, 0, -1, 1};
+	int	dy[] = {-1, 1, 0, 0};
 
-	if(!is_valid_position_to_fill(grid, width,height,x, y))
-		return;
-	if(grid[y][x] == EXIT)
+	if (!is_valid_position_to_fill(grid, width, height, x, y))
+		return ;
+	if (grid[y][x] == EXIT)
 	{
 		grid[y][x] = VISITED;
-		ft_printf(" --- VISITED filled EXIT at [column:%d,line:%d] --- \n", x+1, y+1);
-		return;
+		ft_printf(" --- VISITED filled EXIT at [column:%d,line:%d] --- \n", x + 1, y + 1);
+		return ;
 	}
 	grid[y][x] = VISITED;
-
 	my_flood_fill(grid, width, height, x + dx[UP], y + dy[UP]);
 	my_flood_fill(grid, width, height, x + dx[DOWN], y + dy[DOWN]);
 	my_flood_fill(grid, width, height, x + dx[LEFT], y + dy[LEFT]);
@@ -488,66 +485,68 @@ void my_flood_fill(char **grid, int width, int height, int x, int y)
 
 bool	map_includes_specific_char(char **grid, int width, int height, char c)
 {
-	int i = 0;
-	int j;
+	int	i;
+	int	j;
 
-	while(i < height)
+	i = 0;
+	while (i < height)
 	{
 		j = 0;
-		while(j < width)
+		while (j < width)
 		{
-			if(grid[i][j] == c)
+			if (grid[i][j] == c)
 			{
-				ft_printf(" --- found specified char at [column:%d,line:%d] --- \n", j+1, i+1);
+				ft_printf(" --- found specified char at [column:%d,line:%d] --- \n", j + 1, i + 1);
 				return (true);
 			}
 			j++;
 		}
 		i++;
 	}
-	return(false);
+	return (false);
 }
 
 void	validate_playability(t_game *game)
 {
 	char	**grid_copy;
-	int	i;
+	int		i;
+	int		p_x;
+	int		p_y;
 
 	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");
-	grid_copy = (char **)malloc(sizeof(char *)*game->map.height);
-	if(!grid_copy)
+	grid_copy = (char **)malloc(sizeof(char *) * game->map.height);
+	if (!grid_copy)
 		error_exit("Memory allocation failed for flood fill map copy.");
 	i = 0;
-	while(i < game->map.height)
+	while (i < game->map.height)
 	{
 		grid_copy[i] = ft_strdup(game->map.data[i]);
-		if(!grid_copy[i])
+		if (!grid_copy[i])
 		{
-			free_double_ptr(grid_copy,i);
+			free_double_ptr(grid_copy, i);
 			error_exit("Memory allocation failed for flood fill row copy.");
 		}
 		i++;
 	}
-	int p_x = game->map.player_pos_x;
-    int p_y = game->map.player_pos_y;
-
+	p_x = game->map.player_pos_x;
+	p_y = game->map.player_pos_y;
 	my_flood_fill(grid_copy, game->map.width, game->map.height, p_x, p_y);
 	ft_printf(" --- printing map after my_flood_fill ---\n");
-	
-
-	if(map_includes_specific_char(grid_copy, game->map.width, game->map.height, COLLECTIBLE))
+	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height,
+			COLLECTIBLE))
 	{
 		free_double_ptr(grid_copy, game->map.height);
 		error_exit("Map is not playable: Not all collectibles are reachable.");
 	}
-	if(map_includes_specific_char(grid_copy, game->map.width, game->map.height, EXIT))
+	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height,
+			EXIT))
 	{
-		my_print_map(grid_copy);	// you must remove this line
+		my_print_map(grid_copy); // you must remove this line
 		free_double_ptr(grid_copy, game->map.height);
 		error_exit("Map is not playable: Exit is not reachable.");
 	}
 	ft_printf(" --- Map path playability validation successful. ---\n");
-    free_double_ptr(grid_copy, game->map.height); 
+	free_double_ptr(grid_copy, game->map.height);
 }
 
 int	main(void)
@@ -562,41 +561,40 @@ int	main(void)
 	if (game.win_ptr == NULL)
 		return (1);
 	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
-	
 	// //	step3
 	// draw_stuff(&game);
-
 	//	step4
-	game.img_wall = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/wall.xpm", &game.img_width, &game.img_height);
-    if (!game.img_wall)
+	game.img_wall = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/wall.xpm",
+			&game.img_width, &game.img_height);
+	if (!game.img_wall)
 		error_exit("Failed to load wall image");
-    game.img_floor = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/floor.xpm", &game.img_width, &game.img_height);
-    if (!game.img_floor)
+	game.img_floor = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/floor.xpm",
+			&game.img_width, &game.img_height);
+	if (!game.img_floor)
 		error_exit("Failed to load floor image");
-    game.img_player = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/player.xpm", &game.img_width, &game.img_height);
-    if (!game.img_player)
+	game.img_player = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/player.xpm", &game.img_width, &game.img_height);
+	if (!game.img_player)
 		error_exit("Failed to load player image");
-    game.img_collectible = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/collectible.xpm", &game.img_width, &game.img_height);
-    if (!game.img_collectible)
+	game.img_collectible = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/collectible.xpm", &game.img_width, &game.img_height);
+	if (!game.img_collectible)
 		error_exit("Failed to load collectible image");
-    game.img_exit = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/exit.xpm", &game.img_width, &game.img_height);
-    if (!game.img_exit)
+	game.img_exit = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/exit.xpm",
+			&game.img_width, &game.img_height);
+	if (!game.img_exit)
 		error_exit("Failed to load exit image");
 	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
-	
 	// draw_image(&game);
 	read_map_from_file("", &game);
 	validate_map(&(game.map));
-	validate_playability(&game); 
-
+	validate_playability(&game);
 	render_map(&game);
 	mlx_loop(game.mlx_ptr); // what's this function ?
 	if (game.img_collectible)
 	{
 		mlx_destroy_image(game.mlx_ptr, game.img_collectible);
 	}
-	// destroy_game_resources(&game); 
+	// destroy_game_resources(&game);
 	return (0);
 }
 
