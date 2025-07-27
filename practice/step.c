@@ -186,10 +186,8 @@ char	**ft_stradd(char **double_array, char *new_str)
 }
 
 void	read_map_from_file(const char *file_path, t_game *game)
-// gameポインタを受け取るように変更
 {
 	(void)file_path;
-
 	int fd;
 	int i;
 	char *tmp_line;
@@ -201,69 +199,18 @@ void	read_map_from_file(const char *file_path, t_game *game)
 	while (1)
 	{
 		tmp_line = get_next_line(fd);
-		// ft_printf("	tmp_line:%s\n", tmp_line);
-
 		game->map.data = ft_stradd(game->map.data, tmp_line);
 		if (!tmp_line)
 			break ;
-		ft_printf("	each line of map.data : %s\n", game->map.data[i]);
 		i++;
 	}
 	my_print_map(game->map.data);
 	close(fd);
-
 	game->map.width = ft_strlen(game->map.data[0]);
 	game->map.height = i;
-
-	i = 0;
 }
 
-//	render map
-int	render_map(t_game *game)
-{
-	int		x;
-	int		y;
-	void	*current_img;
-	char	cell;
-
-	y = 0;
-	while (y < game->map.height)
-	{
-		x = 0;
-		while (x < game->map.width)
-		{
-			cell = game->map.data[y][x];
-			current_img = NULL;
-			if (cell == '1')
-			{
-				current_img = game->img_wall;
-			}
-			else if (cell == '0')
-			{
-				current_img = game->img_floor;
-			}
-			else if (cell == 'P')
-			{
-				current_img = game->img_player;
-			}
-			else if (cell == 'C')
-			{
-				current_img = game->img_collectible;
-			}
-			else if (cell == 'E')
-			{
-				current_img = game->img_exit;
-			}
-			if (current_img)
-			{
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, current_img, x * TILE_SIZE, y * TILE_SIZE);
-			}
-			x++;
-		}
-		y++;
-	}
-	return (0);
-}
+//	--- now check here --- 
 
 void	check_walls(t_map *map)
 {
@@ -509,6 +456,52 @@ int	is_valid_move_position(t_map *map, int x, int y)
 	if (map->data[y][x] == '1')
 		return (0);
 	return (1);
+}
+
+int	render_map(t_game *game)
+{
+	int		x;
+	int		y;
+	void	*current_img;
+	char	cell;
+
+	y = 0;
+	while (y < game->map.height)
+	{
+		x = 0;
+		while (x < game->map.width)
+		{
+			cell = game->map.data[y][x];
+			current_img = NULL;
+			if (cell == '1')
+			{
+				current_img = game->img_wall;
+			}
+			else if (cell == '0')
+			{
+				current_img = game->img_floor;
+			}
+			else if (cell == 'P')
+			{
+				current_img = game->img_player;
+			}
+			else if (cell == 'C')
+			{
+				current_img = game->img_collectible;
+			}
+			else if (cell == 'E')
+			{
+				current_img = game->img_exit;
+			}
+			if (current_img)
+			{
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, current_img, x * TILE_SIZE, y * TILE_SIZE);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (0);
 }
 
 void handle_game_clear(t_game *game)
