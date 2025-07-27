@@ -7,7 +7,7 @@ void	error_exit(char *message)
 	exit(EXIT_FAILURE);
 }
 
-void	my_print_map(char **mapdata)
+void	my_print_map(char **mapdata)	// you will comment out this function.
 {
 	int	y;
 
@@ -42,25 +42,40 @@ int	key_press_hook(int keycode, t_game *game)
 	}
 	else if(keycode == KEY_W)
 	{
-		ft_printf(" --- W key was pressed. --- \n");
+		ft_printf(" --- W key was pressed. --- \n");	//	you should comment out this line.
 		move_player(game, 0, -1);
 	}
 	else if(keycode == KEY_S)
 	{
-		ft_printf(" --- S key was pressed. --- \n");
+		ft_printf(" --- S key was pressed. --- \n");	//	you should comment out this line.
 		move_player(game, 0, 1);
 	}
 	else if(keycode == KEY_A)
 	{
-		ft_printf(" --- A key was pressed. --- \n");
+		ft_printf(" --- A key was pressed. --- \n");	//	you should comment out this line.
 		move_player(game, -1, 0);
 	}
 	else if(keycode == KEY_D)
 	{
-		ft_printf(" --- D key was pressed. --- \n");
+		ft_printf(" --- D key was pressed. --- \n");	//	you should comment out this line.
 		move_player(game, 1, 0);
 	}
 	return (0);
+}
+
+void	free_double_ptr(char **ptr, size_t count)
+{
+	size_t	i;
+
+	i = 0;
+	if (count < 1)
+		return ;
+	while (i < count)
+	{
+		free(ptr[i]);
+		i++;
+	}
+	free(ptr);
 }
 
 void free_map_data(t_map *map)
@@ -110,16 +125,16 @@ int	draw_stuff(t_game *game)
 	return (0);
 }
 
-// step4
-int	draw_image(t_game *game)
-{
-	// mlx_clear_window(game->mlx_ptr, game->win_ptr);
-	if (game->img_collectible)
-	{
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_collectible, 0, 0);
-	}
-	return (0);
-}
+// // step4
+// int	draw_image(t_game *game)
+// {
+// 	// mlx_clear_window(game->mlx_ptr, game->win_ptr);
+// 	if (game->img_collectible)
+// 	{
+// 		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_collectible, 0, 0);
+// 	}
+// 	return (0);
+// }
 
 // void	read_map_from_file(const char *file_path, t_map *map)
 // {
@@ -134,19 +149,16 @@ int	draw_image(t_game *game)
 // 	map->data[1][2] = '\0';
 // }
 
-void	free_double_ptr(char **ptr, size_t count)
+size_t	count_double_array_lines(char **double_array)
 {
-	size_t	i;
+	size_t	line_num;
 
-	i = 0;
-	if (count < 1)
-		return ;
-	while (i < count)
+	line_num = 0;
+	while(double_array && double_array[line_num])
 	{
-		free(ptr[i]);
-		i++;
+		line_num++;
 	}
-	free(ptr);
+	return(line_num);
 }
 
 char	**ft_stradd(char **double_array, char *new_str)
@@ -155,11 +167,11 @@ char	**ft_stradd(char **double_array, char *new_str)
 	size_t	i;
 	size_t	line_num;
 
-	line_num = 0;
-	while (double_array && double_array[line_num])
-	{
-		line_num++;
-	}
+	line_num = count_double_array_lines(double_array);
+	// while (double_array && double_array[line_num])
+	// {
+	// 	line_num++;
+	// }
 	res = (char **)malloc(sizeof(char *) * (line_num + 2));
 	if (!res)
 	{
@@ -500,7 +512,7 @@ void	validate_playability(t_game *game)
 	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");
 	grid_copy = (char **)malloc(sizeof(char *) * game->map.height);
 	if (!grid_copy)
-		error_exit("Memory allocation failed for flood fill map copy.");
+		error_exit("Memory allocation failed  flood fill map copy.");
 	i = 0;
 	while (i < game->map.height)
 	{
