@@ -190,34 +190,11 @@ void	read_map_from_file(const char *file_path, t_game *game)
 {
 	(void)file_path;
 
-
-	// // map->data (char**) のためのメモリを確保（行ポインタの配列）
-	// game->map.data = (char **)malloc(sizeof(char *) * game->map.height);
-	// if (!game->map.data)
-	//     error_exit("Failed to allocate map rows");
-
-	// int i = 0;
-	// while (i < game->map.height)
-	// {
-	//     // 各行（char*）のためのメモリを確保
-	//     // +1 はヌル終端文字のため (C文字列として扱う場合)
-	//     game->map.data[i] = (char *)malloc(sizeof(char) * (game->map.width + 1));
-	//     if (!game->map.data[i])
-	//     {
-	//         // 途中でメモリ確保失敗した場合、それまでに確保したメモリを解放する
-	//         while (--i >= 0)
-	//             free(game->map.data[i]);
-	//         free(game->map.data);
-	//         error_exit("Failed to allocate map columns");
-	//     }
-	//     i++;
-	// }
-
 	int fd;
 	int i;
 	char *tmp_line;
-
-	fd = open("./map/test.ber", O_RDONLY);
+	file_path = "./map/test1.ber";	//	you need to remove this line & add function to get file_path.
+	fd = open(file_path, O_RDONLY);
 	game->map.data = NULL;
 	i = 0;
 
@@ -239,13 +216,6 @@ void	read_map_from_file(const char *file_path, t_game *game)
 	game->map.height = i;
 
 	i = 0;
-
-	// // プレイヤー位置など、他のマップ情報も設定
-	// game->map.player_pos_x = 0; // 例
-	// game->map.player_pos_y = 0; // 例
-	// game->map.player_count = 1; // 例
-	// game->map.exit_count = 1; // 例
-	// game->map.collective_count = 1; // 例
 }
 
 //	render map
@@ -600,7 +570,7 @@ int	main(void)
 	game.mlx_ptr = mlx_init();
 	if (game.mlx_ptr == NULL)
 		return (1);
-	game.win_ptr = mlx_new_window(game.mlx_ptr, 800, 600, "STEP window");
+	game.win_ptr = mlx_new_window(game.mlx_ptr, 1200, 800, "STEP window");
 	if (game.win_ptr == NULL)
 		return (1);
 	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
