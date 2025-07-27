@@ -168,29 +168,18 @@ char	**ft_stradd(char **double_array, char *new_str)
 	size_t	line_num;
 
 	line_num = count_double_array_lines(double_array);
-	// while (double_array && double_array[line_num])
-	// {
-	// 	line_num++;
-	// }
+	if (!new_str)
+		return (double_array);
 	res = (char **)malloc(sizeof(char *) * (line_num + 2));
 	if (!res)
-	{
 		return (NULL);
-	}
 	i = 0;
 	while (i < line_num)
 	{
 		res[i] = double_array[i];
 		i++;
 	}
-	if (new_str)
-	{
-		res[i++] = new_str;
-	}
-	else
-	{
-		res[i++] = NULL;
-	}
+	res[i++] = new_str;
 	res[i] = NULL;
 	free(double_array);
 	return (res);
