@@ -210,8 +210,6 @@ void	read_map_from_file(const char *file_path, t_game *game)
 	game->map.height = i;
 }
 
-//	--- now check here --- 
-
 void	check_walls(t_map *map)
 {
 	int	x;
@@ -288,62 +286,6 @@ void	check_elements(t_map *map)
 	}
 }
 
-// path check
-
-// int is_queue_empty(t_queue *q)
-// {
-//     return (q->front == NULL);
-// }
-
-// t_queue	*create_queue(void)
-// {
-// 	t_queue	*q;
-
-// 	q = (t_queue *)malloc(sizeof(t_queue));
-// 	if(!q)
-// 	{
-// 		return (NULL);
-// 	}
-// 	q->front = NULL;
-// 	q->rear = NULL;
-// 	q->size = 0;
-// 	return (q);
-// }
-
-// void	enqueue(t_queue *q, int x, int y)
-// {
-// 	t_queue_node	*new_node;
-
-// 	new_node = (t_queue_node *)malloc(sizeof(t_queue_node));
-// 	if (!new_node)
-// 		return ;
-// 	new_node->x = x;
-// 	new_node->y = y;
-// 	new_node->next = NULL;
-// 	if (is_queue_empty(q))
-// 	{
-// 		q->rear->next = new_node;
-// 		q->rear = new_node;
-// 	}
-// 	q->size++;
-// }
-
-// t_queue_node *dequeue(t_queue *q)
-// {
-// 	t_queue_node *temp;
-
-// 	if(is_queue_empty(q))
-// 		return (NULL);
-// 	temp = q->front;
-// 	q->front = q->front->next;
-// 	if(q->front == NULL)
-// 		q->rear = NULL;
-// 		q->size--;
-// 		return(temp);
-// }
-
-
-
 bool	is_valid_position_to_fill(char **grid, int width, int height, int x,
 		int y)
 {
@@ -397,69 +339,52 @@ bool	map_includes_specific_char(char **grid, int width, int height, char c)
 	return (false);
 }
 
-// void	validate_playability(t_game *game)
-// {
-// 	char	**grid_copy;
-// 	int		i;
-// 	int		p_x;
-// 	int		p_y;
+//	--- now check here --- 
 
-// 	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");
-// 	grid_copy = (char **)malloc(sizeof(char *) * game->map.height);
-// 	if (!grid_copy)
-// 		error_exit("Memory allocation failed  flood fill map copy.");
-// 	i = 0;
-// 	while (i < game->map.height)
-// 	{
-// 		grid_copy[i] = ft_strdup(game->map.data[i]);
-// 		if (!grid_copy[i])
-// 		{
-// 			free_double_ptr(grid_copy, i);
-// 			error_exit("Memory allocation failed for flood fill row copy.");
-// 		}
-// 		i++;
-// 	}
-// 	p_x = game->map.player_pos_x;
-// 	p_y = game->map.player_pos_y;
-// 	my_flood_fill(grid_copy, game->map.width, game->map.height, p_x, p_y);
-// 	ft_printf(" --- printing map after my_flood_fill ---\n");
-// 	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height, COLLECTIBLE))
-// 	{
-// 		free_double_ptr(grid_copy, game->map.height);
-// 		error_exit("Map is not playable: Not all collectibles are reachable.");
-// 	}
-// 	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height, EXIT))
-// 	{
-// 		my_print_map(grid_copy); // you must remove this line
-// 		free_double_ptr(grid_copy, game->map.height);
-// 		error_exit("Map is not playable: Exit is not reachable.");
-// 	}
-// 	ft_printf(" --- Map path playability validation successful. ---\n");
-// 	free_double_ptr(grid_copy, game->map.height);
-// }
-
-void	validate_playability(t_map *map)
+char	**map_copy(t_map *map)
 {
 	char	**grid_copy;
-	int		i;
-	int		p_x;
-	int		p_y;
+	int i;
 
-	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");
 	grid_copy = (char **)malloc(sizeof(char *) * map->height);
-	if (!grid_copy)
-		error_exit("Memory allocation failed  flood fill map copy.");
+	if(grid_copy)
+		NULL;
 	i = 0;
-	while (i < map->height)
+	while(i < map->height)
 	{
 		grid_copy[i] = ft_strdup(map->data[i]);
 		if (!grid_copy[i])
 		{
 			free_double_ptr(grid_copy, i);
-			error_exit("Memory allocation failed for flood fill row copy.");
+			return NULL;
 		}
 		i++;
 	}
+	return grid_copy;
+}
+
+void	validate_playability(t_map *map)
+{
+	char	**grid_copy;
+	// int		i;
+	int		p_x;
+	int		p_y;
+
+	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");
+	grid_copy = map_copy(map);
+	if (!grid_copy)
+		error_exit("Memory allocation failed  flood fill map copy.");	//	you must free map & game ptr.
+	// i = 0;
+	// while (i < map->height)
+	// {
+	// 	grid_copy[i] = ft_strdup(map->data[i]);
+	// 	if (!grid_copy[i])
+	// 	{
+	// 		free_double_ptr(grid_copy, i);
+	// 		error_exit("Memory allocation failed for flood fill row copy.");
+	// 	}
+	// 	i++;
+	// }
 	p_x = map->player_pos_x;
 	p_y = map->player_pos_y;
 	my_flood_fill(grid_copy, map->width, map->height, p_x, p_y);
