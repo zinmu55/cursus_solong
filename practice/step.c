@@ -191,7 +191,7 @@ void	read_map_from_file(const char *file_path, t_game *game)
 	int fd;
 	int i;
 	char *tmp_line;
-	file_path = "./map/test1.ber";	//	you need to remove this line & add function to get file_path.
+	file_path = "./map/test2.ber";	//	you need to remove this line & add function to get file_path.
 	fd = open(file_path, O_RDONLY);
 	game->map.data = NULL;
 	i = 0;
@@ -339,69 +339,53 @@ bool	map_includes_specific_char(char **grid, int width, int height, char c)
 	return (false);
 }
 
-//	--- now check here --- 
-
 char	**map_copy(t_map *map)
 {
-	char	**grid_copy;
+	char	**copy_grid;
 	int i;
 
-	grid_copy = (char **)malloc(sizeof(char *) * map->height);
-	if(grid_copy)
+	copy_grid = (char **)malloc(sizeof(char *) * (map->height + 1));
+	if(copy_grid)
 		NULL;
 	i = 0;
 	while(i < map->height)
 	{
-		grid_copy[i] = ft_strdup(map->data[i]);
-		if (!grid_copy[i])
+		copy_grid[i] = ft_strdup(map->data[i]);
+		if (!copy_grid[i])
 		{
-			free_double_ptr(grid_copy, i);
+			free_double_ptr(copy_grid, i);
 			return NULL;
 		}
 		i++;
 	}
-	return grid_copy;
+	copy_grid[i] = NULL;
+	return copy_grid;
 }
 
 void	validate_playability(t_map *map)
 {
-	char	**grid_copy;
-	// int		i;
-	int		p_x;
-	int		p_y;
+	char	**copy_grid;
 
-	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");
-	grid_copy = map_copy(map);
-	if (!grid_copy)
+	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");	// you must comment out this line.
+	copy_grid = map_copy(map);
+	if (!copy_grid)
 		error_exit("Memory allocation failed  flood fill map copy.");	//	you must free map & game ptr.
-	// i = 0;
-	// while (i < map->height)
-	// {
-	// 	grid_copy[i] = ft_strdup(map->data[i]);
-	// 	if (!grid_copy[i])
-	// 	{
-	// 		free_double_ptr(grid_copy, i);
-	// 		error_exit("Memory allocation failed for flood fill row copy.");
-	// 	}
-	// 	i++;
-	// }
-	p_x = map->player_pos_x;
-	p_y = map->player_pos_y;
-	my_flood_fill(grid_copy, map->width, map->height, p_x, p_y);
-	ft_printf(" --- printing map after my_flood_fill ---\n");
-	if (map_includes_specific_char(grid_copy, map->width, map->height, COLLECTIBLE))
+	my_flood_fill(copy_grid, map->width, map->height, map->player_pos_x, map->player_pos_y);
+	ft_printf(" --- printing map after my_flood_fill ---\n");	// you must comment out this line.
+	my_print_map(copy_grid);	// you must comment out this line.
+	if (map_includes_specific_char(copy_grid, map->width, map->height, COLLECTIBLE))
 	{
-		free_double_ptr(grid_copy, map->height);
+		free_double_ptr(copy_grid, map->height);
 		error_exit("Map is not playable: Not all collectibles are reachable.");
 	}
-	if (map_includes_specific_char(grid_copy, map->width, map->height, EXIT))
+	if (map_includes_specific_char(copy_grid, map->width, map->height, EXIT))
 	{
-		my_print_map(grid_copy); // you must remove this line
-		free_double_ptr(grid_copy, map->height);
+		my_print_map(copy_grid); // you must remove this line
+		free_double_ptr(copy_grid, map->height);
 		error_exit("Map is not playable: Exit is not reachable.");
 	}
 	ft_printf(" --- Map path playability validation successful. ---\n");
-	free_double_ptr(grid_copy, map->height);
+	free_double_ptr(copy_grid, map->height);
 }
 
 void	validate_map(t_map *map)
@@ -422,12 +406,31 @@ int	is_valid_move_position(t_map *map, int x, int y)
 	return (1);
 }
 
+void	my_render_tile(t_game *game, int x, int y, char tile)
+{
+	void	*tile_img;
+
+	tile_img = NULL;
+	if (tile == '1')
+		tile_img = game->img_wall;
+	else if (tile == '0')
+		tile_img = game->img_floor;
+	else if (tile == 'P')
+		tile_img = game->img_player;
+	else if (tile == 'C')
+		tile_img = game->img_collectible;
+	else if (tile == 'E')
+		tile_img = game->img_exit;
+	if (tile_img)
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, tile_img, x * TILE_SIZE, y * TILE_SIZE);
+}
+
 int	render_map(t_game *game)
 {
 	int		x;
 	int		y;
-	void	*current_img;
-	char	cell;
+	// void	*current_img;
+	// char	cell;
 
 	y = 0;
 	while (y < game->map.height)
@@ -435,32 +438,7 @@ int	render_map(t_game *game)
 		x = 0;
 		while (x < game->map.width)
 		{
-			cell = game->map.data[y][x];
-			current_img = NULL;
-			if (cell == '1')
-			{
-				current_img = game->img_wall;
-			}
-			else if (cell == '0')
-			{
-				current_img = game->img_floor;
-			}
-			else if (cell == 'P')
-			{
-				current_img = game->img_player;
-			}
-			else if (cell == 'C')
-			{
-				current_img = game->img_collectible;
-			}
-			else if (cell == 'E')
-			{
-				current_img = game->img_exit;
-			}
-			if (current_img)
-			{
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, current_img, x * TILE_SIZE, y * TILE_SIZE);
-			}
+			my_render_tile(game, x, y, game->map.data[y][x]);
 			x++;
 		}
 		y++;
@@ -474,6 +452,8 @@ void handle_game_clear(t_game *game)
 	ft_printf(" Total moves: %d\n", game->move_count);
 	close_window_hook(game);
 }
+
+//	--- now check here --- 
 
 int move_player(t_game *game, int dx, int dy)
 {
