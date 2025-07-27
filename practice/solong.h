@@ -6,7 +6,7 @@
 /*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/07/26 22:50:59 by shintarokoh      ###   ########.fr       */
+/*   Updated: 2025/07/27 12:39:24 by shintarokoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ bool					is_valid_position_to_fill(char **grid, int width,
 							int height, int x, int y);
 bool					map_includes_specific_char(char **grid, int width,
 							int height, char c);
-void					validate_playability(t_game *game);
+// void					validate_playability(t_game *game);
+void					validate_playability(t_map *map);
+
 
 // player_moves.c
 int						is_valid_move_position(t_map *map, int x, int y);

@@ -15,7 +15,7 @@ void	my_print_map(char **mapdata)	// you will comment out this function.
 	y = 0;
 	while (mapdata[y])
 	{
-		ft_printf("%s\n", mapdata[y]);
+		ft_printf("	%s\n", mapdata[y]);
 		y++;
 	}
 	ft_printf(" ------------------------- \n");
@@ -237,20 +237,20 @@ void	check_walls(t_map *map)
 	// ft_printf("walls check is OK. \n", x);
 }
 
-void	check_elements(t_map *map)
+void	count_elements(t_map *map)
 {
 	int		x;
 	int		y;
 	char	c;
 
-	x = 0;
-	y = 0;
+	x = -1;
+	y = -1;
 	map->player_count = 0;
 	map->exit_count = 0;
 	map->collectible_count = 0;
-	while (y++ < map->height - 1)
+	while (++y < map->height)
 	{
-		while (x++ < map->width - 1)
+		while (++x < map->width)
 		{
 			c = map->data[y][x];
 			if (c == 'P')
@@ -260,21 +260,19 @@ void	check_elements(t_map *map)
 				map->player_pos_y = y;
 			}
 			else if (c == 'E')
-			{
 				map->exit_count++;
-			}
 			else if (c == 'C')
-			{
 				map->collectible_count++;
-			}
 			else if (c != '0' && c != '1')
-			{
 				error_exit("Map contains invalid characters. (Allowed: 0, 1, P, E, C) ");
-			}
-			// ft_printf(" x:%d,y:%d \n", x, y);
 		}
-		x = 0;
+		x = -1;
 	}
+}
+
+void	check_elements(t_map *map)
+{
+	count_elements(map);
 	if (map->player_count != 1)
 	{
 		ft_printf(" player_count : %d \n", map->player_count);
@@ -288,15 +286,6 @@ void	check_elements(t_map *map)
 	{
 		error_exit("Map must contain at least one collectible ('C').");
 	}
-}
-
-void	validate_map(t_map *map)
-{
-	ft_printf(" --- Validating map --- \n");
-	check_walls(map);
-	check_elements(map);
-	// check_path_existence(map);
-	printf(" --- Map validation successful ---\n");
 }
 
 // path check
@@ -408,7 +397,48 @@ bool	map_includes_specific_char(char **grid, int width, int height, char c)
 	return (false);
 }
 
-void	validate_playability(t_game *game)
+// void	validate_playability(t_game *game)
+// {
+// 	char	**grid_copy;
+// 	int		i;
+// 	int		p_x;
+// 	int		p_y;
+
+// 	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");
+// 	grid_copy = (char **)malloc(sizeof(char *) * game->map.height);
+// 	if (!grid_copy)
+// 		error_exit("Memory allocation failed  flood fill map copy.");
+// 	i = 0;
+// 	while (i < game->map.height)
+// 	{
+// 		grid_copy[i] = ft_strdup(game->map.data[i]);
+// 		if (!grid_copy[i])
+// 		{
+// 			free_double_ptr(grid_copy, i);
+// 			error_exit("Memory allocation failed for flood fill row copy.");
+// 		}
+// 		i++;
+// 	}
+// 	p_x = game->map.player_pos_x;
+// 	p_y = game->map.player_pos_y;
+// 	my_flood_fill(grid_copy, game->map.width, game->map.height, p_x, p_y);
+// 	ft_printf(" --- printing map after my_flood_fill ---\n");
+// 	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height, COLLECTIBLE))
+// 	{
+// 		free_double_ptr(grid_copy, game->map.height);
+// 		error_exit("Map is not playable: Not all collectibles are reachable.");
+// 	}
+// 	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height, EXIT))
+// 	{
+// 		my_print_map(grid_copy); // you must remove this line
+// 		free_double_ptr(grid_copy, game->map.height);
+// 		error_exit("Map is not playable: Exit is not reachable.");
+// 	}
+// 	ft_printf(" --- Map path playability validation successful. ---\n");
+// 	free_double_ptr(grid_copy, game->map.height);
+// }
+
+void	validate_playability(t_map *map)
 {
 	char	**grid_copy;
 	int		i;
@@ -416,13 +446,13 @@ void	validate_playability(t_game *game)
 	int		p_y;
 
 	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");
-	grid_copy = (char **)malloc(sizeof(char *) * game->map.height);
+	grid_copy = (char **)malloc(sizeof(char *) * map->height);
 	if (!grid_copy)
 		error_exit("Memory allocation failed  flood fill map copy.");
 	i = 0;
-	while (i < game->map.height)
+	while (i < map->height)
 	{
-		grid_copy[i] = ft_strdup(game->map.data[i]);
+		grid_copy[i] = ft_strdup(map->data[i]);
 		if (!grid_copy[i])
 		{
 			free_double_ptr(grid_copy, i);
@@ -430,23 +460,32 @@ void	validate_playability(t_game *game)
 		}
 		i++;
 	}
-	p_x = game->map.player_pos_x;
-	p_y = game->map.player_pos_y;
-	my_flood_fill(grid_copy, game->map.width, game->map.height, p_x, p_y);
+	p_x = map->player_pos_x;
+	p_y = map->player_pos_y;
+	my_flood_fill(grid_copy, map->width, map->height, p_x, p_y);
 	ft_printf(" --- printing map after my_flood_fill ---\n");
-	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height, COLLECTIBLE))
+	if (map_includes_specific_char(grid_copy, map->width, map->height, COLLECTIBLE))
 	{
-		free_double_ptr(grid_copy, game->map.height);
+		free_double_ptr(grid_copy, map->height);
 		error_exit("Map is not playable: Not all collectibles are reachable.");
 	}
-	if (map_includes_specific_char(grid_copy, game->map.width, game->map.height, EXIT))
+	if (map_includes_specific_char(grid_copy, map->width, map->height, EXIT))
 	{
 		my_print_map(grid_copy); // you must remove this line
-		free_double_ptr(grid_copy, game->map.height);
+		free_double_ptr(grid_copy, map->height);
 		error_exit("Map is not playable: Exit is not reachable.");
 	}
 	ft_printf(" --- Map path playability validation successful. ---\n");
-	free_double_ptr(grid_copy, game->map.height);
+	free_double_ptr(grid_copy, map->height);
+}
+
+void	validate_map(t_map *map)
+{
+	ft_printf(" --- Validating map --- \n");
+	check_walls(map);
+	check_elements(map);
+	validate_playability(map);
+	printf(" --- Map validation successful ---\n");
 }
 
 int	is_valid_move_position(t_map *map, int x, int y)
@@ -594,7 +633,7 @@ int	main(void)
 	// draw_image(&game);
 	read_map_from_file("", &game);
 	validate_map(&(game.map));
-	validate_playability(&game);
+	// validate_playability(&game);
 	render_map(&game);
 	mlx_loop(game.mlx_ptr); // what's this function ?
 	if (game.img_collectible)
