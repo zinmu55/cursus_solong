@@ -405,6 +405,14 @@ int	move_to_exit(t_game *game)
 	}
 }
 
+void	moving_on_floor(t_game *game, int new_player_pos_x, int new_player_pos_y)
+{
+	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = FLOOR;
+	game->map.player_pos_x = new_player_pos_x;
+	game->map.player_pos_y = new_player_pos_y;
+	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = PLAYER;
+}
+
 int move_player(t_game *game, int dx, int dy)
 {
 	int new_player_pos_x;
@@ -413,29 +421,20 @@ int move_player(t_game *game, int dx, int dy)
 
 	new_player_pos_x = game->map.player_pos_x + dx;
 	new_player_pos_y = game->map.player_pos_y + dy;
-
 	if(!is_accessible_position(&(game->map),new_player_pos_x, new_player_pos_y))
-	{
 		return (0);
-	}
 	target_cell = game->map.data[new_player_pos_y][new_player_pos_x];
 	if(target_cell == EXIT)
 	{
 		if(!move_to_exit(game))
 			return (0);
 	}
-	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = FLOOR;
-	game->map.player_pos_x = new_player_pos_x;
-	game->map.player_pos_y = new_player_pos_y;
-	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = PLAYER;
-
+	moving_on_floor(game, new_player_pos_x, new_player_pos_y);
+	//	you can convert the section below to handle_collectible function. 
 	if(target_cell == COLLECTIBLE)
-	{
-		game->map.collectible_count--;
-		ft_printf("You've got an item! You need to get %d more items.\n", game->map.collectible_count);
-	}
+		ft_printf("You've got an item! You need to get %d more items.\n", game->map.collectible_count--);
 	game->move_count++;
-	ft_printf("counts of moves: %d\n", game->move_count);
+	ft_printf(" counts of moves : %d \n", game->move_count);
 	render_map(game);
 	return (1);
 }
