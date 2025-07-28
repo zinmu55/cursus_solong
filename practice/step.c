@@ -451,7 +451,7 @@ int	close_window_hook(t_game *game)
 	ft_putendl_fd(" --- window close hook --- ", STDOUT_FILENO);
 	if (game->mlx_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	exit(0);
+	exit(0);	//	check whether you can exit here (or return?).
 }
 
 int	key_press_hook(int keycode, t_game *game)
@@ -465,25 +465,13 @@ int	key_press_hook(int keycode, t_game *game)
 		close_window_hook(game);
 	}
 	else if(keycode == KEY_W)
-	{
-		ft_printf(" --- W key was pressed. --- \n");	//	you should comment out this line.
 		move_player(game, 0, -1);
-	}
 	else if(keycode == KEY_S)
-	{
-		ft_printf(" --- S key was pressed. --- \n");	//	you should comment out this line.
 		move_player(game, 0, 1);
-	}
 	else if(keycode == KEY_A)
-	{
-		ft_printf(" --- A key was pressed. --- \n");	//	you should comment out this line.
 		move_player(game, -1, 0);
-	}
 	else if(keycode == KEY_D)
-	{
-		ft_printf(" --- D key was pressed. --- \n");	//	you should comment out this line.
 		move_player(game, 1, 0);
-	}
 	return (0);
 }
 
@@ -491,7 +479,6 @@ int	main(void)
 {
 	t_game	game;
 
-	ft_putendl_fd(" --- main functions --- ", STDOUT_FILENO);
 	game.mlx_ptr = mlx_init();
 	if (game.mlx_ptr == NULL)
 		return (1);
@@ -499,9 +486,9 @@ int	main(void)
 	if (game.win_ptr == NULL)
 		return (1);
 	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
-	// //	step3
-	// draw_stuff(&game);
-	//	step4
+	// you can integrate above as game_init function.
+	
+	//	step4 : you can integrate below as load_images function.
 	game.img_wall = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/wall.xpm",
 			&game.img_width, &game.img_height);
 	if (!game.img_wall)
@@ -520,19 +507,19 @@ int	main(void)
 			&game.img_width, &game.img_height);
 	if (!game.img_exit)
 		error_exit("Failed to load exit image");
+	//	you can integrate above as load_images function.
+	
 	game.move_count = 0;
-	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);
-	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
-	// draw_image(&game);
-	read_map_from_file("", &game);
+	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);	//	check this line.
+	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);	//	check this line.
+	read_map_from_file("./map/test1.ber", &game);	//	you should take filepath from argv.
 	validate_map(&(game.map));
-	// validate_playability(&game);
 	render_map(&game);
 	mlx_loop(game.mlx_ptr); // what's this function ?
-	if (game.img_collectible)
-	{
-		mlx_destroy_image(game.mlx_ptr, game.img_collectible);
-	}
-	// destroy_game_resources(&game);
+	// if (game.img_collectible)	//	you need to throw away all images.
+	// {
+	// 	mlx_destroy_image(game.mlx_ptr, game.img_collectible);
+	// }
+	destroy_game_resources(&game);
 	return (0);
 }
