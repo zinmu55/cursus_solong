@@ -21,48 +21,6 @@ void	my_print_map(char **mapdata)	// you will comment out this function.
 	ft_printf(" ------------------------- \n");
 }
 
-//	step2
-int	close_window_hook(t_game *game)
-{
-	ft_putendl_fd(" --- window close hook --- ", STDOUT_FILENO);
-	if (game->mlx_ptr)
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	exit(0);
-}
-
-int	key_press_hook(int keycode, t_game *game)
-{
-	ft_putendl_fd(" --- key press hook --- ", STDOUT_FILENO);
-	if (keycode == KEY_ESC) // Linux
-	// if (keycode == 65307) // Linux
-	// if(keycode == 53)	//mac
-	{
-		ft_putendl_fd(" --- ESC key : window close hook --- ", STDOUT_FILENO);
-		close_window_hook(game);
-	}
-	else if(keycode == KEY_W)
-	{
-		ft_printf(" --- W key was pressed. --- \n");	//	you should comment out this line.
-		move_player(game, 0, -1);
-	}
-	else if(keycode == KEY_S)
-	{
-		ft_printf(" --- S key was pressed. --- \n");	//	you should comment out this line.
-		move_player(game, 0, 1);
-	}
-	else if(keycode == KEY_A)
-	{
-		ft_printf(" --- A key was pressed. --- \n");	//	you should comment out this line.
-		move_player(game, -1, 0);
-	}
-	else if(keycode == KEY_D)
-	{
-		ft_printf(" --- D key was pressed. --- \n");	//	you should comment out this line.
-		move_player(game, 1, 0);
-	}
-	return (0);
-}
-
 void	free_double_ptr(char **ptr, size_t count)
 {
 	size_t	i;
@@ -124,30 +82,6 @@ int	draw_stuff(t_game *game)
 	}
 	return (0);
 }
-
-// // step4
-// int	draw_image(t_game *game)
-// {
-// 	// mlx_clear_window(game->mlx_ptr, game->win_ptr);
-// 	if (game->img_collectible)
-// 	{
-// 		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img_collectible, 0, 0);
-// 	}
-// 	return (0);
-// }
-
-// void	read_map_from_file(const char *file_path, t_map *map)
-// {
-// 	// char	*LINE;
-
-// 	(void)file_path;
-// 	map->data[0][0] = '1';
-// 	map->data[0][1] = '0';
-// 	map->data[0][2] = '\n';
-// 	map->data[1][0] = 'C';
-// 	map->data[1][1] = 'E';
-// 	map->data[1][2] = '\0';
-// }
 
 size_t	count_double_array_lines(char **double_array)
 {
@@ -397,7 +331,7 @@ void	validate_map(t_map *map)
 	printf(" --- Map validation successful ---\n");
 }
 
-int	is_valid_move_position(t_map *map, int x, int y)
+int	is_accessible_position(t_map *map, int x, int y)
 {
 	if (x < 0 || x >= map->width || y < 0 || y >= map->height)
 		return (0);
@@ -455,21 +389,38 @@ void handle_game_clear(t_game *game)
 
 //	--- now check here --- 
 
+// int	move_to_exit(t_game *game)
+// {
+// 	if(game->map.collectible_count == 0)
+// 		{
+// 			game->move_count++;
+// 			ft_printf("counts of moves: %d\n", game->move_count);
+// 			handle_game_clear(game);
+// 			return (1);	// you must check neccesariness below
+// 		}
+// 	else
+// 	{
+// 		ft_printf("You need to collect all items before exiting!\n");
+// 		return (0);
+// 	}
+// }
+
 int move_player(t_game *game, int dx, int dy)
 {
 	int new_player_pos_x;
 	int new_player_pos_y;
 	char target_cell;
 
-	new_player_pos_x = game->map.player_pos_x + dx;
-	new_player_pos_y = game->map.player_pos_y + dy;
+	// new_player_pos_x = game->map.player_pos_x + dx;
+	// new_player_pos_y = game->map.player_pos_y + dy;
+	dx += game->map.player_pos_x;
+	dy += game->map.player_pos_y;
 
-	if(!is_valid_move_position(&(game->map),new_player_pos_x, new_player_pos_y))
-	{
+
+	if(!is_accessible_position(&(game->map),dx, dy))
 		return (0);
-	}
-	target_cell = game->map.data[new_player_pos_y][new_player_pos_x];
-	if(target_cell == EXIT)
+	target_cell = game->map.data[dx][dy];
+	if(target_cell == EXIT)	//	you can convert this block to handle_exit function. 
 	{
 		if(game->map.collectible_count == 0)
 		{
@@ -483,11 +434,13 @@ int move_player(t_game *game, int dx, int dy)
 			return (0);
 		}
 	}
+	//	you can convert below to moving_floor function.
 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = FLOOR;
-	game->map.player_pos_x = new_player_pos_x;
-	game->map.player_pos_y = new_player_pos_y;
+	game->map.player_pos_x = dx;
+	game->map.player_pos_y = dy;
 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = PLAYER;
 
+	//	you can convert the section below to handle_collectible function. 
 	if(target_cell == COLLECTIBLE)
 	{
 		game->map.collectible_count--;
@@ -497,6 +450,48 @@ int move_player(t_game *game, int dx, int dy)
 	ft_printf("counts of moves: %d\n", game->move_count);
 	render_map(game);
 	return (1);
+}
+
+//	step2
+int	close_window_hook(t_game *game)
+{
+	ft_putendl_fd(" --- window close hook --- ", STDOUT_FILENO);
+	if (game->mlx_ptr)
+		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	exit(0);
+}
+
+int	key_press_hook(int keycode, t_game *game)
+{
+	ft_putendl_fd(" --- key press hook --- ", STDOUT_FILENO);
+	if (keycode == KEY_ESC) // Linux
+	// if (keycode == 65307) // Linux
+	// if(keycode == 53)	//mac
+	{
+		ft_putendl_fd(" --- ESC key : window close hook --- ", STDOUT_FILENO);
+		close_window_hook(game);
+	}
+	else if(keycode == KEY_W)
+	{
+		ft_printf(" --- W key was pressed. --- \n");	//	you should comment out this line.
+		move_player(game, 0, -1);
+	}
+	else if(keycode == KEY_S)
+	{
+		ft_printf(" --- S key was pressed. --- \n");	//	you should comment out this line.
+		move_player(game, 0, 1);
+	}
+	else if(keycode == KEY_A)
+	{
+		ft_printf(" --- A key was pressed. --- \n");	//	you should comment out this line.
+		move_player(game, -1, 0);
+	}
+	else if(keycode == KEY_D)
+	{
+		ft_printf(" --- D key was pressed. --- \n");	//	you should comment out this line.
+		move_player(game, 1, 0);
+	}
+	return (0);
 }
 
 int	main(void)
