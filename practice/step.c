@@ -421,28 +421,8 @@ int move_player(t_game *game, int dx, int dy)
 	target_cell = game->map.data[new_player_pos_y][new_player_pos_x];
 	if(target_cell == EXIT)
 	{
-		// if(game->map.collectible_count == 0)
-		// {
-		// 	game->move_count++;
-		// 	ft_printf("counts of moves: %d\n", game->move_count);
-		// 	handle_game_clear(game);
-		// }
-		// else
-		// {
-		// 	ft_printf("You need to collect all items before exiting!\n");
-		// 	return (0);
-		// }
-		if(move_to_exit(game))
-		{
-			game->move_count++;
-			ft_printf("counts of moves: %d\n", game->move_count);
-			handle_game_clear(game);
-		}
-		else
-		{
-			ft_printf("You need to collect all items before exiting!\n");
+		if(!move_to_exit(game))
 			return (0);
-		}
 	}
 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = FLOOR;
 	game->map.player_pos_x = new_player_pos_x;
