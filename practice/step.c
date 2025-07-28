@@ -125,7 +125,7 @@ void	read_map_from_file(const char *file_path, t_game *game)
 	int fd;
 	int i;
 	char *tmp_line;
-	file_path = "./map/test2.ber";	//	you need to remove this line & add function to get file_path.
+	file_path = "./map/test1.ber";	//	you need to remove this line & add function to get file_path.
 	fd = open(file_path, O_RDONLY);
 	game->map.data = NULL;
 	i = 0;
@@ -166,7 +166,25 @@ void	check_walls(t_map *map)
 			error_exit("walls check error (both sides)");
 		}
 	}
-	// ft_printf("walls check is OK. \n", x);
+}
+
+void	update_counts(t_map *map, int x, int y)
+{
+	char	c;
+
+	c = map->data[y][x];
+	if (c == 'P')
+	{
+		map->player_count++;
+		map->player_pos_x = x;
+		map->player_pos_y = y;
+	}
+	else if (c == 'E')
+		map->exit_count++;
+	else if (c == 'C')
+		map->collectible_count++;
+	else if (c != '0' && c != '1')
+		error_exit("Map contains invalid characters. (Allowed: 0, 1, P, E, C) ");
 }
 
 void	count_elements(t_map *map)
@@ -184,19 +202,7 @@ void	count_elements(t_map *map)
 	{
 		while (++x < map->width)
 		{
-			c = map->data[y][x];
-			if (c == 'P')
-			{
-				map->player_count++;
-				map->player_pos_x = x;
-				map->player_pos_y = y;
-			}
-			else if (c == 'E')
-				map->exit_count++;
-			else if (c == 'C')
-				map->collectible_count++;
-			else if (c != '0' && c != '1')
-				error_exit("Map contains invalid characters. (Allowed: 0, 1, P, E, C) ");
+			update_counts(map, x, y);
 		}
 		x = -1;
 	}
@@ -413,6 +419,7 @@ void	moving_on_floor(t_game *game, int new_player_pos_x, int new_player_pos_y)
 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = PLAYER;
 }
 
+//	you can convert handle_collectible section to another function. 
 int move_player(t_game *game, int dx, int dy)
 {
 	int new_player_pos_x;
@@ -430,7 +437,6 @@ int move_player(t_game *game, int dx, int dy)
 			return (0);
 	}
 	moving_on_floor(game, new_player_pos_x, new_player_pos_y);
-	//	you can convert the section below to handle_collectible function. 
 	if(target_cell == COLLECTIBLE)
 		ft_printf("You've got an item! You need to get %d more items.\n", game->map.collectible_count--);
 	game->move_count++;
@@ -438,61 +444,6 @@ int move_player(t_game *game, int dx, int dy)
 	render_map(game);
 	return (1);
 }
-
-// int move_player(t_game *game, int dx, int dy)
-// {
-// 	int new_player_pos_x;
-// 	int new_player_pos_y;
-// 	char target_cell;
-
-// 	// new_player_pos_x = game->map.player_pos_x + dx;
-// 	// new_player_pos_y = game->map.player_pos_y + dy;
-// 	dx += game->map.player_pos_x;
-// 	dy += game->map.player_pos_y;
-
-
-// 	if(!is_accessible_position(&(game->map),dx, dy))
-// 		return (0);
-// 	target_cell = game->map.data[dx][dy];
-// 	if(target_cell == EXIT)	//	you can convert this block to handle_exit function. 
-// 	{
-// 		if(game->map.collectible_count == 0)
-// 		{
-// 			game->move_count++;
-// 			ft_printf("counts of moves: %d\n", game->move_count);
-// 			handle_game_clear(game);
-// 		}
-// 		else
-// 		{
-// 			ft_printf("You need to collect all items before exiting!\n");
-// 			return (0);
-// 		}
-// 	}
-// 	// {
-// 	// 	if(!move_to_exit(game))
-// 	// 	{
-// 	// 		ft_printf("You need to collect all items before exiting!\n");
-// 	// 		return (0);
-// 	// 	}
-// 	// }
-	
-// 	//	you can convert below to moving_floor function.
-// 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = FLOOR;
-// 	game->map.player_pos_x = dx;
-// 	game->map.player_pos_y = dy;
-// 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = PLAYER;
-
-// 	//	you can convert the section below to handle_collectible function. 
-// 	if(target_cell == COLLECTIBLE)
-// 	{
-// 		game->map.collectible_count--;
-// 		ft_printf("You've got an item! You need to get %d more items.\n", game->map.collectible_count);
-// 	}
-// 	game->move_count++;
-// 	ft_printf("counts of moves: %d\n", game->move_count);
-// 	render_map(game);
-// 	return (1);
-// }
 
 //	step2
 int	close_window_hook(t_game *game)
@@ -585,22 +536,3 @@ int	main(void)
 	// destroy_game_resources(&game);
 	return (0);
 }
-
-// int	main(void)
-// {
-// 	void	*mlx_ptr;
-// 	void	*win_ptr;
-
-// 	mlx_ptr = mlx_init();
-// 	if (mlx_ptr == NULL)
-// 	{
-// 		exit(1);
-// 	}
-// 	win_ptr = mlx_new_window(mlx_ptr, 800, 600,"step window" );
-// 	if (win_ptr == NULL)
-// 	{
-// 		exit(1);
-// 	}
-// 	mlx_loop(mlx_ptr);
-// 	return (0);
-// }
