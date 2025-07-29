@@ -6,7 +6,7 @@
 /*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/07/27 12:39:24 by shintarokoh      ###   ########.fr       */
+/*   Updated: 2025/07/30 08:54:02 by shintarokoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,57 +107,52 @@ typedef struct s_game
 
 # endif
 
-void					error_exit(char *message);
-void					read_map_from_file(const char *file_path, t_game *game);
-char					**ft_stradd(char **double_array, char *new_str);
-void					free_double_ptr(char **ptr, size_t count);
+// Function Prototypes
 
-void					check_walls(t_map *map);
-void					check_elements(t_map *map);
-void					validate_map(t_map *map);
+// map_utils.c (or similar grouping)
+void	my_print_map(char **mapdata);
+size_t	count_double_array_lines(char **double_array);
+char	**ft_stradd(char **double_array, char *new_str);
+void	read_map_from_file(const char *file_path, t_game *game);
+char	**map_copy(t_map *map);
 
-// flood_fill_validation.c
-void					my_flood_fill(char **grid, int width, int height, int x,
-							int y);
-bool					is_valid_position_to_fill(char **grid, int width,
-							int height, int x, int y);
-bool					map_includes_specific_char(char **grid, int width,
-							int height, char c);
-// void					validate_playability(t_game *game);
-void					validate_playability(t_map *map);
+// map_validation.c (or similar grouping)
+void	check_walls(t_map *map);
+void	update_counts(t_map *map, int x, int y);
+void	count_elements(t_map *map);
+void	check_elements(t_map *map);
+
+//	flood_fill.c
+bool	is_valid_position_to_fill(char **grid, int width, int height, int x, int y);
+void	my_flood_fill(char **grid, int width, int height, int x, int y);
+bool	map_includes_specific_char(char **grid, int width, int height, char c);
+void	validate_playability(t_map *map);
+void	validate_map(t_map *map);
+
+// game_loop_and_hooks.c (or similar grouping)
+int		close_window_hook(t_game *game);
+int		key_press_hook(int keycode, t_game *game);
+void	my_render_tile(t_game *game, int x, int y, char tile);
+int		render_map(t_game *game);
+void	handle_game_clear(t_game *game);
 
 
-// player_moves.c
-int						is_valid_move_position(t_map *map, int x, int y);
-void					handle_game_clear(t_game *game);
-int						move_player(t_game *game, int dx, int dy);
+// move_player.c
+int		move_to_exit(t_game *game);
+void	moving_on_floor(t_game *game, int new_player_pos_x, int new_player_pos_y);
+int		move_player(t_game *game, int dx, int dy);
 
-// hooks.c (または main.c)
-int						close_window_hook(t_game *game);
-int						key_press_hook(int keycode, t_game *game);
+// error_exit.c (or similar grouping)
+void	error_exit(char *message);
+// resource_management.c (or similar grouping)
+void	free_double_ptr(char **ptr, size_t count);
+void	free_map_data(t_map *map);
+void	destroy_game_resources(t_game *game);
+void	load_images(t_game *game);
 
-// render.c
-int						render_map(t_game *game);
-int						draw_stuff(t_game *game);
-int						draw_image(t_game *game);
-
-// utility.c (または general utilities)
-void					my_print_map(char **mapdata);
-void					free_map_data(t_map *map);
-void					destroy_game_resources(t_game *game);
-
-// // movement keycode for Linux (X11)
-// # define KEY_ESC 65307
-// # define KEY_W 119
-// # define KEY_A 97
-// # define KEY_S 115
-// # define KEY_D 100
-
-// // movement keycode for macOS
-// # define KEY_ESC_MAC 53
-// # define KEY_W_MAC 13
-// # define KEY_A_MAC 0
-// # define KEY_S_MAC 1
-// # define KEY_D_MAC 2
+// initialization.c (or similar grouping)
+// main.c
+int		init_game(t_game *game);
+int		main(int argc, char **argv);
 
 #endif
