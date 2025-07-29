@@ -496,40 +496,37 @@ void	load_images(t_game *game)
 		error_exit("Failed to load exit image");
 }
 
+int	init_game(t_game *game)
+{
+	game->mlx_ptr = mlx_init();
+	if (game->mlx_ptr == NULL)
+		return (1);
+	game->win_ptr = mlx_new_window(game->mlx_ptr, 1200, 800, "STEP window");
+	if (game->win_ptr == NULL)
+		return (1);
+	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
+	return(0);
+}
+
 int	main(void)
 {
 	t_game	game;
 
-	game.mlx_ptr = mlx_init();
-	if (game.mlx_ptr == NULL)
-		return (1);
-	game.win_ptr = mlx_new_window(game.mlx_ptr, 1200, 800, "STEP window");
-	if (game.win_ptr == NULL)
-		return (1);
-	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
-	// you can integrate above as game_init function.
+	if(init_game(&game))
+	{
+		return(1);
+	}
+	// // you can integrate below as game_init function.
+	// game.mlx_ptr = mlx_init();
+	// if (game.mlx_ptr == NULL)
+	// 	return (1);
+	// game.win_ptr = mlx_new_window(game.mlx_ptr, 1200, 800, "STEP window");
+	// if (game.win_ptr == NULL)
+	// 	return (1);
+	// ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
+	// // you can integrate above as game_init function.
 	
 	load_images(&game);
-	// //	step4 : you can integrate below as load_images function.
-	// game.img_wall = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/wall.xpm",
-	// 		&game.img_width, &game.img_height);
-	// if (!game.img_wall)
-	// 	error_exit("Failed to load wall image");
-	// game.img_floor = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/floor.xpm",
-	// 		&game.img_width, &game.img_height);
-	// if (!game.img_floor)
-	// 	error_exit("Failed to load floor image");
-	// game.img_player = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/player.xpm", &game.img_width, &game.img_height);
-	// if (!game.img_player)
-	// 	error_exit("Failed to load player image");
-	// game.img_collectible = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/collectible.xpm", &game.img_width, &game.img_height);
-	// if (!game.img_collectible)
-	// 	error_exit("Failed to load collectible image");
-	// game.img_exit = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/exit.xpm",
-	// 		&game.img_width, &game.img_height);
-	// if (!game.img_exit)
-	// 	error_exit("Failed to load exit image");
-	// //	you can integrate above as load_images function.
 	
 	game.move_count = 0;
 	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);	//	check this line.
