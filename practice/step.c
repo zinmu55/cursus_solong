@@ -63,26 +63,6 @@ void destroy_game_resources(t_game *game)
 	free_map_data(&(game->map));
 }
 
-//	step3
-int	draw_stuff(t_game *game)
-{
-	int	i;
-	int	j;
-
-	mlx_pixel_put(game->mlx_ptr, game->win_ptr, 400, 300, 0XFF0000);
-	i = 0;
-	j = 0;
-	while (i++ < 50)
-	{
-		while (j++ < 50)
-		{
-			mlx_pixel_put(game->mlx_ptr, game->win_ptr, 100 + i, 100 + j, 0x008800);
-		}
-		j = 0;
-	}
-	return (0);
-}
-
 size_t	count_double_array_lines(char **double_array)
 {
 	size_t	line_num;
@@ -505,33 +485,25 @@ int	init_game(t_game *game)
 	if (game->win_ptr == NULL)
 		return (1);
 	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
+	game->move_count = 0;
 	return(0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	if(init_game(&game))
+	if(argc != 2)
 	{
-		return(1);
+		ft_printf("you need to use just 1 parameter (map file path) with this program. \n");
+		return (1);
 	}
-	// // you can integrate below as game_init function.
-	// game.mlx_ptr = mlx_init();
-	// if (game.mlx_ptr == NULL)
-	// 	return (1);
-	// game.win_ptr = mlx_new_window(game.mlx_ptr, 1200, 800, "STEP window");
-	// if (game.win_ptr == NULL)
-	// 	return (1);
-	// ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
-	// // you can integrate above as game_init function.
-	
+	if(init_game(&game))
+		return(1);
 	load_images(&game);
-	
-	game.move_count = 0;
 	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);	//	check this line.
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);	//	check this line.
-	read_map_from_file("./map/test1.ber", &game);	//	you should take filepath from argv.
+	read_map_from_file(argv[1], &game);	//	you should take filepath from argv.
 	validate_map(&(game.map));
 	render_map(&game);
 	mlx_loop(game.mlx_ptr); // what's this function?
