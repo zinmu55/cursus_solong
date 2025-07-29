@@ -125,7 +125,6 @@ void	read_map_from_file(const char *file_path, t_game *game)
 	int fd;
 	int i;
 	char *tmp_line;
-	file_path = "./map/test1.ber";	//	you need to remove this line & add function to get file_path.
 	fd = open(file_path, O_RDONLY);
 	game->map.data = NULL;
 	i = 0;
@@ -515,11 +514,7 @@ int	main(void)
 	read_map_from_file("./map/test1.ber", &game);	//	you should take filepath from argv.
 	validate_map(&(game.map));
 	render_map(&game);
-	mlx_loop(game.mlx_ptr); // what's this function ?
-	// if (game.img_collectible)	//	you need to throw away all images.
-	// {
-	// 	mlx_destroy_image(game.mlx_ptr, game.img_collectible);
-	// }
+	mlx_loop(game.mlx_ptr); // what's this function?
 	destroy_game_resources(&game);
 	return (0);
 }
