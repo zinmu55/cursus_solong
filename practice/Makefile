@@ -6,13 +6,13 @@
 #    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/07/26 22:39:18 by shintarokoh      ###   ########.fr        #
+#    Updated: 2025/07/30 21:06:58 by shintarokoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME := step step1 step2 test1 test2
-SRCS := step1.c
+NAME := step
+SRCS := step.c
 
 MLX_LIB := mlx
 
@@ -51,7 +51,9 @@ CFLAGS :=	# -Wall -Wextra -Werror
 
 all : $(NAME)
 
-tmp : tmp.c
+step : step.c
+# 	make -C ../libft
+# 	make -C ../libft clean
 	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
 
 linker :
@@ -62,24 +64,6 @@ linker :
 	make -C ../gnl clean
 	make -C ../ft_printf clean
 
-step : step.c
-# 	make -C ../libft
-# 	make -C ../libft clean
-	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
-
-step1 : step1.c
-	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
-#	cc step1.c -L../minilibx-linux -lmlx -lXext -lX11 -o step1
-
-step2 : step2.c
-	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
-
-test1 : test1.c
-	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
-
-test2 : test2.c
-	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
-
 clean :
 	rm -f *.o
 
@@ -87,8 +71,6 @@ fclean :
 	make clean
 	rm -f $(NAME)
 
-re :
-	make fclean
-	all
+re : fclean all
 
 .PHONY : all clean fclean re
