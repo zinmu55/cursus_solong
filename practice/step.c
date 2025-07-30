@@ -367,7 +367,7 @@ int	render_map(t_game *game)
 
 void handle_game_clear(t_game *game)
 {
-	ft_printf(" --- Congratulations! You cleared the game! --- ");
+	ft_printf(" --- Congratulations! You cleared the game! --- \n");
 	ft_printf(" Total moves: %d\n", game->move_count);
 	close_window_hook(game);
 }
@@ -437,8 +437,6 @@ int	key_press_hook(int keycode, t_game *game)
 {
 	ft_putendl_fd(" --- key press hook --- ", STDOUT_FILENO);
 	if (keycode == KEY_ESC) // Linux
-	// if (keycode == 65307) // Linux
-	// if(keycode == 53)	//mac
 	{
 		ft_putendl_fd(" --- ESC key : window close hook --- ", STDOUT_FILENO);
 		close_window_hook(game);

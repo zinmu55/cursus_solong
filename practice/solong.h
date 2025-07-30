@@ -6,7 +6,7 @@
 /*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/07/30 08:54:02 by shintarokoh      ###   ########.fr       */
+/*   Updated: 2025/07/30 08:59:56 by shintarokoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ int		key_press_hook(int keycode, t_game *game);
 void	my_render_tile(t_game *game, int x, int y, char tile);
 int		render_map(t_game *game);
 void	handle_game_clear(t_game *game);
-
 
 // move_player.c
 int		move_to_exit(t_game *game);

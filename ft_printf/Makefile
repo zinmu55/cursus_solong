@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skohtake <skohtake@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 11:04:36 by yonuma            #+#    #+#              #
-#    Updated: 2024/06/11 12:05:49 by skohtake         ###   ########.fr        #
+#    Updated: 2025/07/30 20:17:43 by shintarokoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,3 @@ fclean :
 re : fclean all
 
 .PHONY : all clean fclean re
-
-# program below needs removing to submit
-
-test : $(NAME)
-	cc test_main.c -o TEST $(NAME)
