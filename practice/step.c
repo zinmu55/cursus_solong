@@ -170,7 +170,6 @@ void	count_elements(t_map *map)
 {
 	int		x;
 	int		y;
-	char	c;
 
 	x = -1;
 	y = -1;
@@ -430,7 +429,7 @@ int	close_window_hook(t_game *game)
 	ft_putendl_fd(" --- window close hook --- ", STDOUT_FILENO);
 	if (game->mlx_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	exit(0);	//	check whether you can exit here (or return?).
+	exit(0);	//	check whether you can exit here (or return?). error_extt?
 }
 
 int	key_press_hook(int keycode, t_game *game)

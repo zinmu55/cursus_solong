@@ -6,7 +6,7 @@
 #    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/07/30 21:06:58 by shintarokoh      ###   ########.fr        #
+#    Updated: 2025/07/31 21:21:11 by shintarokoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ else ifeq ($(UNAME_S), Linux)
 endif
 
 CC := cc
-CFLAGS :=	# -Wall -Wextra -Werror
+CFLAGS :=	-Wall -Wextra -Werror
 
 all : $(NAME)
 
