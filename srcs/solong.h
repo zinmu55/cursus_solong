@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 20:19:57 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 21:07:33 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,42 @@
 # include "../ft_printf/includes/ft_printf.h"
 # include "../gnl/get_next_line.h"
 # include "../libft/includes/libft.h"
-# include "../minilibx_opengl_20191021/mlx.h"
+# include "../minilibx_linux/mlx.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
+# if defined(__linux__)
+#  include "../minilibx_linux/mlx.h"
+#  define KEY_ESC 65307
+#  define KEY_W 119
+#  define KEY_A 97
+#  define KEY_S 115
+#  define KEY_D 100
+
+# elif defined(__APPLE__)
+#  include "../minilibx_opengl_20191021/mlx.h"
+#  define KEY_ESC 53
+#  define KEY_W 13
+#  define KEY_A 0
+#  define KEY_S 1
+#  define KEY_D 2
+
+# endif
+
+# define TILE_SIZE 32
+# define WALL '1'
+# define FLOOR '0'
+# define PLAYER 'P'
+# define COLLECTIBLE 'C'
+# define EXIT 'E'
+# define VISITED 'V'
+# define UP 0
+# define DOWN 1
+# define LEFT 2
+# define RIGHT 3
 
 typedef struct s_map
 {
@@ -49,35 +79,6 @@ typedef struct s_game
 	int		img_width;
 	int		img_height;
 }			t_game;
-
-# define TILE_SIZE 32
-
-# define WALL '1'
-# define FLOOR '0'
-# define PLAYER 'P'
-# define COLLECTIBLE 'C'
-# define EXIT 'E'
-# define VISITED 'V'
-# define UP 0
-# define DOWN 1
-# define LEFT 2
-# define RIGHT 3
-
-# if defined(__linux__)
-#  define KEY_ESC 65307
-#  define KEY_W 119
-#  define KEY_A 97
-#  define KEY_S 115
-#  define KEY_D 100
-
-# elif defined(__APPLE__)
-#  define KEY_ESC 53
-#  define KEY_W 13
-#  define KEY_A 0
-#  define KEY_S 1
-#  define KEY_D 2
-
-# endif
 
 // Function Prototypes
 
