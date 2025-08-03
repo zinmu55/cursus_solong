@@ -204,34 +204,32 @@ void	check_elements(t_map *map)
 	}
 }
 
-bool	is_valid_position_to_fill(char **grid, int width, int height, int x,
-		int y)
+bool	is_valid_position_to_fill(t_map *map, int x, int y)
 {
-	if (x < 0 || x >= width || y < 0 || y >= height)
+	if (x < 0 || x >= map->width || y < 0 || y >= map->height)
 		return (false);
-	if (grid[y][x] == WALL || grid[y][x] == VISITED)
+	if (map->data[y][x] == WALL || map->data[y][x] == VISITED)
 		return (false);
 	return (true);
 }
 
-void	my_flood_fill(char **grid, int width, int height, int x, int y)
+void	my_flood_fill(t_map *map, int x, int y)
 {
-	int	dx[] = {0, 0, -1, 1};
-	int	dy[] = {-1, 1, 0, 0};
+	const int	dx[] = {0, 0, -1, 1};
+	const int	dy[] = {-1, 1, 0, 0};
 
-	if (!is_valid_position_to_fill(grid, width, height, x, y))
+	if (!is_valid_position_to_fill(map, x, y))
 		return ;
-	if (grid[y][x] == EXIT)
+	if (map->data[y][x] == EXIT)
 	{
-		grid[y][x] = VISITED;
-		ft_printf(" --- VISITED filled EXIT at [column:%d,line:%d] --- \n", x + 1, y + 1);
+		map->data[y][x] = VISITED;
 		return ;
 	}
-	grid[y][x] = VISITED;
-	my_flood_fill(grid, width, height, x + dx[UP], y + dy[UP]);
-	my_flood_fill(grid, width, height, x + dx[DOWN], y + dy[DOWN]);
-	my_flood_fill(grid, width, height, x + dx[LEFT], y + dy[LEFT]);
-	my_flood_fill(grid, width, height, x + dx[RIGHT], y + dy[RIGHT]);
+	map->data[y][x] = VISITED;
+	my_flood_fill(map, x + dx[UP], y + dy[UP]);
+	my_flood_fill(map, x + dx[DOWN], y + dy[DOWN]);
+	my_flood_fill(map, x + dx[LEFT], y + dy[LEFT]);
+	my_flood_fill(map, x + dx[RIGHT], y + dy[RIGHT]);
 }
 
 bool	map_includes_specific_char(char **grid, int width, int height, char c)
@@ -247,7 +245,6 @@ bool	map_includes_specific_char(char **grid, int width, int height, char c)
 		{
 			if (grid[i][j] == c)
 			{
-				ft_printf(" --- found specified char at [column:%d,line:%d] --- \n", j + 1, i + 1);
 				return (true);
 			}
 			j++;
@@ -257,16 +254,16 @@ bool	map_includes_specific_char(char **grid, int width, int height, char c)
 	return (false);
 }
 
-char	**map_copy(t_map *map)
+char	**copy_map_data(t_map *map)
 {
 	char	**copy_grid;
 	int i;
 
 	copy_grid = (char **)malloc(sizeof(char *) * (map->height + 1));
-	if(copy_grid)
+	if (copy_grid)
 		NULL;
 	i = 0;
-	while(i < map->height)
+	while (i < map->height)
 	{
 		copy_grid[i] = ft_strdup(map->data[i]);
 		if (!copy_grid[i])
@@ -282,29 +279,55 @@ char	**map_copy(t_map *map)
 
 void	validate_playability(t_map *map)
 {
-	char	**copy_grid;
+	// char	**copy_grid;
+	t_map	copied_map;
 
-	ft_printf(" --- Validating map path playability with Flood Fill (DFS) --- \n");	// you must comment out this line.
-	copy_grid = map_copy(map);
-	if (!copy_grid)
-		error_exit("Memory allocation failed  flood fill map copy.");	//	you must free map & game ptr.
-	my_flood_fill(copy_grid, map->width, map->height, map->player_pos_x, map->player_pos_y);
-	ft_printf(" --- printing map after my_flood_fill ---\n");	// you must comment out this line.
-	my_print_map(copy_grid);	// you must comment out this line.
-	if (map_includes_specific_char(copy_grid, map->width, map->height, COLLECTIBLE))
+	// copy_grid = copy_map_data(map);
+	copied_map.data = copy_map_data(map);	// you should edit copy_map_data
+	if (!copied_map.data)
+		error_exit("Memory allocation failed map copy data in flood fill.");	//	you must free map & game ptr. 
+	copied_map.width = map->width;
+	copied_map.height = map->height;
+	// copied_map.player_pos_x = map->player_pos_x;
+	// copied_map.player_pos_y = map->player_pos_y;
+
+	// you should use *map as argument
+	my_flood_fill(&copied_map, map->player_pos_x, map->player_pos_y);
+	if (map_includes_specific_char(copied_map.data, map->width, map->height, COLLECTIBLE))
 	{
-		free_double_ptr(copy_grid, map->height);
+		free_double_ptr(copied_map.data, map->height);
 		error_exit("Map is not playable: Not all collectibles are reachable.");
 	}
-	if (map_includes_specific_char(copy_grid, map->width, map->height, EXIT))
+	if (map_includes_specific_char(copied_map.data, map->width, map->height, EXIT))
 	{
-		my_print_map(copy_grid); // you must remove this line
-		free_double_ptr(copy_grid, map->height);
+		free_double_ptr(copied_map.data, map->height);
 		error_exit("Map is not playable: Exit is not reachable.");
 	}
 	ft_printf(" --- Map path playability validation successful. ---\n");
-	free_double_ptr(copy_grid, map->height);
+	free_double_ptr(copied_map.data, copied_map.height);
 }
+
+// void	validate_playability(t_map *map)
+// {
+// 	char	**copy_grid;
+
+// 	copy_grid = copy_map_data(map);
+// 	if (!copy_grid)
+// 		error_exit("Memory allocation failed  flood fill map copy.");	//	you must free map & game ptr.
+// 	my_flood_fill(copy_grid, map->width, map->height, map->player_pos_x, map->player_pos_y);
+// 	if (map_includes_specific_char(copy_grid, map->width, map->height, COLLECTIBLE))
+// 	{
+// 		free_double_ptr(copy_grid, map->height);
+// 		error_exit("Map is not playable: Not all collectibles are reachable.");
+// 	}
+// 	if (map_includes_specific_char(copy_grid, map->width, map->height, EXIT))
+// 	{
+// 		free_double_ptr(copy_grid, map->height);
+// 		error_exit("Map is not playable: Exit is not reachable.");
+// 	}
+// 	ft_printf(" --- Map path playability validation successful. ---\n");
+// 	free_double_ptr(copy_grid, map->height);
+// }
 
 void	validate_map(t_map *map)
 {
@@ -347,8 +370,6 @@ int	render_map(t_game *game)
 {
 	int		x;
 	int		y;
-	// void	*current_img;
-	// char	cell;
 
 	y = 0;
 	while (y < game->map.height)
@@ -370,8 +391,6 @@ void handle_game_clear(t_game *game)
 	ft_printf(" Total moves: %d\n", game->move_count);
 	close_window_hook(game);
 }
-
-//	--- now check here --- 
 
 int	move_to_exit(t_game *game)
 {
@@ -423,7 +442,6 @@ int move_player(t_game *game, int dx, int dy)
 	return (1);
 }
 
-//	step2
 int	close_window_hook(t_game *game)
 {
 	ft_putendl_fd(" --- window close hook --- ", STDOUT_FILENO);
@@ -435,7 +453,7 @@ int	close_window_hook(t_game *game)
 int	key_press_hook(int keycode, t_game *game)
 {
 	ft_putendl_fd(" --- key press hook --- ", STDOUT_FILENO);
-	if (keycode == KEY_ESC) // Linux
+	if (keycode == KEY_ESC)
 	{
 		ft_putendl_fd(" --- ESC key : window close hook --- ", STDOUT_FILENO);
 		close_window_hook(game);
@@ -490,20 +508,20 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	if(argc != 2)
+	if (argc != 2)
 	{
-		ft_printf("you need to use just 1 parameter (map file path) with this program. \n");
+		ft_printf("use just 1 parameter (map file path) with this program. \n");
 		return (1);
 	}
-	if(init_game(&game))
-		return(1);
+	if (init_game(&game))
+		return (1);
 	load_images(&game);
-	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);	//	check this line.
-	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);	//	check this line.
-	read_map_from_file(argv[1], &game);	//	you should take filepath from argv.
+	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);
+	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
+	read_map_from_file(argv[1], &game);
 	validate_map(&(game.map));
 	render_map(&game);
-	mlx_loop(game.mlx_ptr); // what's this function?
+	mlx_loop(game.mlx_ptr);
 	destroy_game_resources(&game);
 	return (0);
 }

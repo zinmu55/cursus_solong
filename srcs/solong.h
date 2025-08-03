@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
+/*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/07/30 21:08:00 by shintarokoh      ###   ########.fr       */
+/*   Updated: 2025/08/03 19:23:15 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-
-// # include "../minilibx-linux/mlx.h"
 
 typedef struct s_map
 {
@@ -114,17 +112,17 @@ void	my_print_map(char **mapdata);
 size_t	count_double_array_lines(char **double_array);
 char	**ft_stradd(char **double_array, char *new_str);
 void	read_map_from_file(const char *file_path, t_game *game);
-char	**map_copy(t_map *map);
+char	**copy_map_data(t_map *map);
 
-// map_validation.c (or similar grouping)
+// count_elements.c (or similar grouping)
 void	check_walls(t_map *map);
 void	update_counts(t_map *map, int x, int y);
 void	count_elements(t_map *map);
 void	check_elements(t_map *map);
 
-//	flood_fill.c
-bool	is_valid_position_to_fill(char **grid, int width, int height, int x, int y);
-void	my_flood_fill(char **grid, int width, int height, int x, int y);
+//	map_validation.c
+// bool	is_valid_position_to_fill(char **grid, int width, int height, int x, int y);
+// void	my_flood_fill(char **grid, int width, int height, int x, int y);
 bool	map_includes_specific_char(char **grid, int width, int height, char c);
 void	validate_playability(t_map *map);
 void	validate_map(t_map *map);
