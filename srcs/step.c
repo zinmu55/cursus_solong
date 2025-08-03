@@ -279,17 +279,13 @@ char	**copy_map_data(t_map *map)
 
 void	validate_playability(t_map *map)
 {
-	// char	**copy_grid;
 	t_map	copied_map;
 
-	// copy_grid = copy_map_data(map);
 	copied_map.data = copy_map_data(map);	// you should edit copy_map_data
 	if (!copied_map.data)
 		error_exit("Memory allocation failed map copy data in flood fill.");	//	you must free map & game ptr. 
 	copied_map.width = map->width;
 	copied_map.height = map->height;
-	// copied_map.player_pos_x = map->player_pos_x;
-	// copied_map.player_pos_y = map->player_pos_y;
 
 	// you should use *map as argument
 	my_flood_fill(&copied_map, map->player_pos_x, map->player_pos_y);
@@ -306,28 +302,6 @@ void	validate_playability(t_map *map)
 	ft_printf(" --- Map path playability validation successful. ---\n");
 	free_double_ptr(copied_map.data, copied_map.height);
 }
-
-// void	validate_playability(t_map *map)
-// {
-// 	char	**copy_grid;
-
-// 	copy_grid = copy_map_data(map);
-// 	if (!copy_grid)
-// 		error_exit("Memory allocation failed  flood fill map copy.");	//	you must free map & game ptr.
-// 	my_flood_fill(copy_grid, map->width, map->height, map->player_pos_x, map->player_pos_y);
-// 	if (map_includes_specific_char(copy_grid, map->width, map->height, COLLECTIBLE))
-// 	{
-// 		free_double_ptr(copy_grid, map->height);
-// 		error_exit("Map is not playable: Not all collectibles are reachable.");
-// 	}
-// 	if (map_includes_specific_char(copy_grid, map->width, map->height, EXIT))
-// 	{
-// 		free_double_ptr(copy_grid, map->height);
-// 		error_exit("Map is not playable: Exit is not reachable.");
-// 	}
-// 	ft_printf(" --- Map path playability validation successful. ---\n");
-// 	free_double_ptr(copy_grid, map->height);
-// }
 
 void	validate_map(t_map *map)
 {
@@ -408,11 +382,11 @@ int	move_to_exit(t_game *game)
 	}
 }
 
-void	moving_on_floor(t_game *game, int new_player_pos_x, int new_player_pos_y)
+void	moving_on_floor(t_game *game, int new_pos_x, int new_pos_y)
 {
 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = FLOOR;
-	game->map.player_pos_x = new_player_pos_x;
-	game->map.player_pos_y = new_player_pos_y;
+	game->map.player_pos_x = new_pos_x;
+	game->map.player_pos_y = new_pos_y;
 	game->map.data[game->map.player_pos_y][game->map.player_pos_x] = PLAYER;
 }
 

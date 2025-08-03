@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 19:23:15 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 19:32:44 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,12 @@ typedef struct s_map
 	int					player_pos_y;
 }						t_map;
 
-// typedef	struct s_img
-// {
-// 	void	*wall_img;
-// 	void	*floor_img;
-// 	void	*player_img;
-// 	void	*collectible_img;
-// 	void	*exit_img;
-// 	int		width;
-// 	int		height;
-// }	t_img;
-
 typedef struct s_game
 {
 	void				*mlx_ptr;
 	void				*win_ptr;
 	t_map				map;
 	int					move_count;
-	// t_img	img;
 	void				*img_wall;
 	void				*img_floor;
 	void				*img_player;
@@ -61,20 +49,6 @@ typedef struct s_game
 	int					img_width;
 	int					img_height;
 }						t_game;
-
-// typedef struct s_queue_node
-// {
-// 	int					x;
-// 	int					y;
-// 	struct s_queue_node	*next;
-// }						t_queue_node;
-
-// typedef struct s_queue
-// {
-// 	t_queue_node		*front;
-// 	t_queue_node		*rear;
-// 	int					size;
-// }						t_queue;
 
 # define TILE_SIZE 32
 
@@ -120,9 +94,9 @@ void	update_counts(t_map *map, int x, int y);
 void	count_elements(t_map *map);
 void	check_elements(t_map *map);
 
-//	map_validation.c
-// bool	is_valid_position_to_fill(char **grid, int width, int height, int x, int y);
-// void	my_flood_fill(char **grid, int width, int height, int x, int y);
+// map_validation.c
+bool	is_valid_position_to_fill(t_map *map, int x, int y);
+void	my_flood_fill(t_map *map, int x, int y);
 bool	map_includes_specific_char(char **grid, int width, int height, char c);
 void	validate_playability(t_map *map);
 void	validate_map(t_map *map);
@@ -136,7 +110,7 @@ void	handle_game_clear(t_game *game);
 
 // move_player.c
 int		move_to_exit(t_game *game);
-void	moving_on_floor(t_game *game, int new_player_pos_x, int new_player_pos_y);
+void	moving_on_floor(t_game *game, int new_pos_x, int new_pos_y);
 int		move_player(t_game *game, int dx, int dy);
 
 // error_exit.c (or similar grouping)
