@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:45:36 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 19:47:03 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:26:41 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ void	my_render_tile(t_game *game, int x, int y, char tile)
 	else if (tile == 'E')
 		tile_img = game->img_exit;
 	if (tile_img)
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, tile_img, x * TILE_SIZE, y * TILE_SIZE);
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+			tile_img, x * TILE_SIZE, y * TILE_SIZE);
 }
 
 int	render_map(t_game *game)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < game->map.height)
@@ -50,7 +51,7 @@ int	render_map(t_game *game)
 	return (0);
 }
 
-void handle_game_clear(t_game *game)
+void	handle_game_clear(t_game *game)
 {
 	ft_printf(" --- Congratulations! You cleared the game! --- \n");
 	ft_printf(" Total moves: %d\n", game->move_count);
@@ -62,7 +63,7 @@ int	close_window_hook(t_game *game)
 	ft_putendl_fd(" --- window close hook --- ", STDOUT_FILENO);
 	if (game->mlx_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	exit(0);	//	check whether you can exit here (or return?). error_extt?
+	exit(0);
 }
 
 int	key_press_hook(int keycode, t_game *game)
@@ -73,13 +74,13 @@ int	key_press_hook(int keycode, t_game *game)
 		ft_putendl_fd(" --- ESC key : window close hook --- ", STDOUT_FILENO);
 		close_window_hook(game);
 	}
-	else if(keycode == KEY_W)
+	else if (keycode == KEY_W)
 		move_player(game, 0, -1);
-	else if(keycode == KEY_S)
+	else if (keycode == KEY_S)
 		move_player(game, 0, 1);
-	else if(keycode == KEY_A)
+	else if (keycode == KEY_A)
 		move_player(game, -1, 0);
-	else if(keycode == KEY_D)
+	else if (keycode == KEY_D)
 		move_player(game, 1, 0);
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:38:13 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 19:42:26 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:23:33 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./solong.h"
 
-void	my_print_map(char **mapdata)	// you will comment out this function.
+void	my_print_map(char **mapdata) // you will comment out this function.
 {
 	int	y;
 
@@ -31,11 +31,11 @@ size_t	count_double_array_lines(char **double_array)
 	size_t	line_num;
 
 	line_num = 0;
-	while(double_array && double_array[line_num])
+	while (double_array && double_array[line_num])
 	{
 		line_num++;
 	}
-	return(line_num);
+	return (line_num);
 }
 
 char	**ft_stradd(char **double_array, char *new_str)
@@ -64,14 +64,14 @@ char	**ft_stradd(char **double_array, char *new_str)
 
 void	read_map_from_file(const char *file_path, t_game *game)
 {
+	int		fd;
+	int		i;
+	char	*tmp_line;
+
 	(void)file_path;
-	int fd;
-	int i;
-	char *tmp_line;
 	fd = open(file_path, O_RDONLY);
 	game->map.data = NULL;
 	i = 0;
-
 	while (1)
 	{
 		tmp_line = get_next_line(fd);
@@ -89,7 +89,7 @@ void	read_map_from_file(const char *file_path, t_game *game)
 char	**copy_map_data(t_map *map)
 {
 	char	**copy_grid;
-	int i;
+	int		i;
 
 	copy_grid = (char **)malloc(sizeof(char *) * (map->height + 1));
 	if (copy_grid)
@@ -101,10 +101,10 @@ char	**copy_map_data(t_map *map)
 		if (!copy_grid[i])
 		{
 			free_double_ptr(copy_grid, i);
-			return NULL;
+			return (NULL);
 		}
 		i++;
 	}
 	copy_grid[i] = NULL;
-	return copy_grid;
+	return (copy_grid);
 }

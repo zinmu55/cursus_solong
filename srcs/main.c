@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:47:53 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 19:47:58 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:19:48 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_game(t_game *game)
 		return (1);
 	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
 	game->move_count = 0;
-	return(0);
+	return (0);
 }
 
 int	main(int argc, char **argv)

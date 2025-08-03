@@ -6,10 +6,9 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:40:16 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 19:40:18 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:22:07 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "./solong.h"
 
@@ -53,13 +52,13 @@ void	update_counts(t_map *map, int x, int y)
 	else if (c == 'C')
 		map->collectible_count++;
 	else if (c != '0' && c != '1')
-		error_exit("Map contains invalid characters. (Allowed: 0, 1, P, E, C) ");
+		error_exit("map has invalid characters. (Allowed: 0, 1, P, E, C) ");
 }
 
 void	count_elements(t_map *map)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	x = -1;
 	y = -1;

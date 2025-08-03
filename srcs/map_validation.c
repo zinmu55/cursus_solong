@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:41:50 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 19:42:45 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:29:30 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,20 @@ void	validate_playability(t_map *map)
 {
 	t_map	copied_map;
 
-	copied_map.data = copy_map_data(map);	// you should edit copy_map_data
+	copied_map.data = copy_map_data(map);
 	if (!copied_map.data)
-		error_exit("Memory allocation failed map copy data in flood fill.");	//	you must free map & game ptr. 
+		error_exit("Memory allocation failed map copy data in flood fill.");
 	copied_map.width = map->width;
 	copied_map.height = map->height;
-
-	// you should use *map as argument
 	my_flood_fill(&copied_map, map->player_pos_x, map->player_pos_y);
-	if (map_includes_specific_char(copied_map.data, map->width, map->height, COLLECTIBLE))
+	if (map_includes_specific_char(copied_map.data, map->width, map->height,
+			COLLECTIBLE))
 	{
 		free_double_ptr(copied_map.data, map->height);
 		error_exit("Map is not playable: Not all collectibles are reachable.");
 	}
-	if (map_includes_specific_char(copied_map.data, map->width, map->height, EXIT))
+	if (map_includes_specific_char(copied_map.data, map->width, map->height,
+			EXIT))
 	{
 		free_double_ptr(copied_map.data, map->height);
 		error_exit("Map is not playable: Exit is not reachable.");

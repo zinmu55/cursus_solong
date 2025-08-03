@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:37:03 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 19:47:28 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:34:54 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_double_ptr(char **ptr, size_t count)
 	free(ptr);
 }
 
-void free_map_data(t_map *map)
+void	free_map_data(t_map *map)
 {
 	if (map->data)
 	{
@@ -43,7 +43,7 @@ void free_map_data(t_map *map)
 	}
 }
 
-void destroy_game_resources(t_game *game)
+void	destroy_game_resources(t_game *game)
 {
 	if (game->img_wall)
 		mlx_destroy_image(game->mlx_ptr, game->img_wall);
@@ -57,7 +57,6 @@ void destroy_game_resources(t_game *game)
 		mlx_destroy_image(game->mlx_ptr, game->img_exit);
 	if (game->win_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-
 	free_map_data(&(game->map));
 }
 
@@ -67,14 +66,17 @@ void	load_images(t_game *game)
 			&(game->img_width), &(game->img_height));
 	if (!game->img_wall)
 		error_exit("Failed to load wall image");
-	game->img_floor = mlx_xpm_file_to_image(game->mlx_ptr, "./textures/floor.xpm",
-			&(game->img_width), &(game->img_height));
+	game->img_floor = mlx_xpm_file_to_image(game->mlx_ptr,
+			"./textures/floor.xpm", &(game->img_width), &(game->img_height));
 	if (!game->img_floor)
 		error_exit("Failed to load floor image");
-	game->img_player = mlx_xpm_file_to_image(game->mlx_ptr, "./textures/player.xpm", &(game->img_width), &(game->img_height));
+	game->img_player = mlx_xpm_file_to_image(game->mlx_ptr,
+			"./textures/player.xpm", &(game->img_width), &(game->img_height));
 	if (!game->img_player)
 		error_exit("Failed to load player image");
-	game->img_collectible = mlx_xpm_file_to_image(game->mlx_ptr, "./textures/collectible.xpm", &(game->img_width), &(game->img_height));
+	game->img_collectible = mlx_xpm_file_to_image(game->mlx_ptr,
+			"./textures/collectible.xpm", &(game->img_width),
+			&(game->img_height));
 	if (!game->img_collectible)
 		error_exit("Failed to load collectible image");
 	game->img_exit = mlx_xpm_file_to_image(game->mlx_ptr, "./textures/exit.xpm",

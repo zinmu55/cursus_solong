@@ -6,10 +6,9 @@
 #    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/08/03 20:08:32 by skohtake         ###   ########.fr        #
+#    Updated: 2025/08/03 20:19:34 by skohtake         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME := so_long
 SRCS := map_utils.c count_elements.c map_validation.c game_loop_and_hooks.c move_player.c  resource_management.c main.c	#	step.c
