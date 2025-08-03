@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 19:32:44 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/03 19:43:56 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int		render_map(t_game *game);
 void	handle_game_clear(t_game *game);
 
 // move_player.c
+int		is_accessible_position(t_map *map, int x, int y);
 int		move_to_exit(t_game *game);
 void	moving_on_floor(t_game *game, int new_pos_x, int new_pos_y);
 int		move_player(t_game *game, int dx, int dy);
