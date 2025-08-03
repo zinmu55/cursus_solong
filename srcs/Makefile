@@ -6,17 +6,16 @@
 #    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/08/03 18:01:16 by skohtake         ###   ########.fr        #
+#    Updated: 2025/08/03 20:08:32 by skohtake         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME := step
-SRCS := step.c
-
-MLX_LIB := mlx
-
+NAME := so_long
+SRCS := map_utils.c count_elements.c map_validation.c game_loop_and_hooks.c move_player.c  resource_management.c main.c	#	step.c
+OBJS = $(SRCS:.c=.o)
 UNAME_S := $(shell uname)
+MLX_LIB := mlx
 
 ifeq ($(UNAME_S), Darwin) 
 	MLX_DIR := ../minilibx_opengl_20191021
@@ -29,20 +28,20 @@ else
 endif
 
 CC := cc
-CFLAGS :=	-Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror
+INCLUDES := -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
 
 all : $(NAME)
 
-step : step.c
-	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
+$(NAME) : $(OBJS)
+	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) $(INCLUDES) 
 
-linker :
-	make -C ../libft re
-	make -C ../gnl re
-	make -C ../ft_printf re
-	make -C ../libft clean
-	make -C ../gnl clean
-	make -C ../ft_printf clean
+step : $(OBJS)
+	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) $(INCLUDES) 
+
+%.o : %.c
+	$(CC) -c $(CFLAGS) $^ -o $@
+# 	$(CC) -c $(CFLAGS) $^ -o $@ $(INCLUDES) 
 
 clean :
 	rm -f *.o
@@ -52,5 +51,13 @@ fclean :
 	rm -f $(NAME)
 
 re : fclean all
+
+linker :
+	make -C ../libft re
+	make -C ../gnl re
+	make -C ../ft_printf re
+	make -C ../libft clean
+	make -C ../gnl clean
+	make -C ../ft_printf clean
 
 .PHONY : all clean fclean re
