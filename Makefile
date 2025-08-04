@@ -3,24 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
+#    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/08/03 20:19:34 by skohtake         ###   ########.fr        #
+#    Updated: 2025/08/04 08:58:49 by shintarokoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := so_long
-SRCS := map_utils.c count_elements.c map_validation.c game_loop_and_hooks.c move_player.c  resource_management.c main.c	#	step.c
+SRCS := map_utils.c count_elements.c map_validation.c game_loop_and_hooks.c move_player.c  resource_management.c main.c
 OBJS = $(SRCS:.c=.o)
 UNAME_S := $(shell uname)
 MLX_LIB := mlx
 
 ifeq ($(UNAME_S), Darwin) 
-	MLX_DIR := ../minilibx_opengl_20191021
+	MLX_DIR := ../mlx/minilibx_opengl_20191021
 	LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB)  -framework OpenGL -framework AppKit -framework Cocoa
 else ifeq ($(UNAME_S), Linux)
-	MLX_DIR := ../minilibx_linux
+	MLX_DIR := ../mlx/minilibx_linux
     LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
 else
 	$(shell echo "Unsupported OS: " && echo $(UNAME_S))
@@ -28,7 +28,7 @@ endif
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-INCLUDES := -L../libft -lft -L../gnl -lgnl -L../ft_printf -lftprintf
+INCLUDES := -L./libft -lft -L./gnl -lgnl -L./ft_printf -lftprintf
 
 all : $(NAME)
 
@@ -52,11 +52,11 @@ fclean :
 re : fclean all
 
 linker :
-	make -C ../libft re
-	make -C ../gnl re
-	make -C ../ft_printf re
-	make -C ../libft clean
-	make -C ../gnl clean
-	make -C ../ft_printf clean
+	make -C ./gnl re
+	make -C ./gnl clean
+	make -C ./ft_printf re
+	make -C ./ft_printf clean
+	make -C ./libft re
+	make -C ./libft clean
 
 .PHONY : all clean fclean re

@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 21:07:33 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/04 08:52:58 by shintarokoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOLONG_H
 # define SOLONG_H
 
-# include "../ft_printf/includes/ft_printf.h"
-# include "../gnl/get_next_line.h"
-# include "../libft/includes/libft.h"
-# include "../minilibx_linux/mlx.h"
+# include "./ft_printf/includes/ft_printf.h"
+# include "./gnl/get_next_line.h"
+# include "./libft/includes/libft.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -24,7 +23,7 @@
 # include <unistd.h>
 
 # if defined(__linux__)
-#  include "../minilibx_linux/mlx.h"
+#  include "../mlx/minilibx_linux/mlx.h"
 #  define KEY_ESC 65307
 #  define KEY_W 119
 #  define KEY_A 97
@@ -32,7 +31,7 @@
 #  define KEY_D 100
 
 # elif defined(__APPLE__)
-#  include "../minilibx_opengl_20191021/mlx.h"
+#  include "../mlx/minilibx_opengl_20191021/mlx.h"
 #  define KEY_ESC 53
 #  define KEY_W 13
 #  define KEY_A 0
