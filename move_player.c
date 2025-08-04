@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:44:31 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 20:32:03 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/04 09:18:07 by shintarokoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	move_player(t_game *game, int dx, int dy)
 	moving_on_floor(game, new_player_pos_x, new_player_pos_y);
 	if (target_cell == COLLECTIBLE)
 		ft_printf("You've got an item! You need to get %d more items.\n",
-			game->map.collectible_count--);
+			--(game->map.collectible_count));
 	game->move_count++;
 	ft_printf(" counts of moves : %d \n", game->move_count);
 	render_map(game);

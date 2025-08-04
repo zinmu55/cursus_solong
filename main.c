@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:47:53 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 20:19:48 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/04 09:16:44 by shintarokoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	init_game(t_game *game)
 	game->mlx_ptr = mlx_init();
 	if (game->mlx_ptr == NULL)
 		return (1);
-	game->win_ptr = mlx_new_window(game->mlx_ptr, 1200, 800, "STEP window");
-	if (game->win_ptr == NULL)
-		return (1);
-	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
+	// game->win_ptr = mlx_new_window(game->mlx_ptr, 1200, 800, "STEP window");
+	// if (game->win_ptr == NULL)
+	// 	return (1);
+	// ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
 	game->move_count = 0;
 	return (0);
 }
@@ -36,11 +36,16 @@ int	main(int argc, char **argv)
 	}
 	if (init_game(&game))
 		return (1);
+	read_map_from_file(argv[1], &game);
+	validate_map(&(game.map));
+	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
+	game.win_ptr = mlx_new_window(game.mlx_ptr, game.map.width * TILE_SIZE,
+				game.map.height * TILE_SIZE, "STEP window");
+	if (game.win_ptr == NULL)
+		return (1);
 	load_images(&game);
 	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
-	read_map_from_file(argv[1], &game);
-	validate_map(&(game.map));
 	render_map(&game);
 	mlx_loop(game.mlx_ptr);
 	destroy_game_resources(&game);
