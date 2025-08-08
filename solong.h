@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 20:40:04 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:55:26 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <unistd.h>
 
 # if defined(__linux__)
-#  include "./mlx/minilibx_linux/mlx.h"
+#  include "/home/skohtake/workspace/mlx/minilibx_linux/mlx.h"
 #  define KEY_ESC 65307
 #  define KEY_W 119
 #  define KEY_A 97

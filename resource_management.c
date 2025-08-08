@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:37:03 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 20:34:54 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 21:05:14 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,22 @@ void	load_images(t_game *game)
 	game->img_wall = mlx_xpm_file_to_image(game->mlx_ptr, "./textures/wall.xpm",
 			&(game->img_width), &(game->img_height));
 	if (!game->img_wall)
-		error_exit("Failed to load wall image");
+		my_clean_error_exit(game, "Failed to load wall image");
 	game->img_floor = mlx_xpm_file_to_image(game->mlx_ptr,
 			"./textures/floor.xpm", &(game->img_width), &(game->img_height));
 	if (!game->img_floor)
-		error_exit("Failed to load floor image");
+		my_clean_error_exit(game, "Failed to load floor image");
 	game->img_player = mlx_xpm_file_to_image(game->mlx_ptr,
 			"./textures/player.xpm", &(game->img_width), &(game->img_height));
 	if (!game->img_player)
-		error_exit("Failed to load player image");
+		my_clean_error_exit(game, "Failed to load player image");
 	game->img_collectible = mlx_xpm_file_to_image(game->mlx_ptr,
 			"./textures/collectible.xpm", &(game->img_width),
 			&(game->img_height));
 	if (!game->img_collectible)
-		error_exit("Failed to load collectible image");
+		my_clean_error_exit(game, "Failed to load collectible image");
 	game->img_exit = mlx_xpm_file_to_image(game->mlx_ptr, "./textures/exit.xpm",
 			&(game->img_width), &(game->img_height));
 	if (!game->img_exit)
-		error_exit("Failed to load exit image");
+		my_clean_error_exit(game, "Failed to load exit image");
 }

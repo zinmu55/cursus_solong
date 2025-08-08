@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
+/*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:44:31 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/04 09:18:07 by shintarokoh      ###   ########.fr       */
+/*   Updated: 2025/08/08 21:08:35 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	move_to_exit(t_game *game)
 	if (game->map.collectible_count == 0)
 	{
 		game->move_count++;
-		ft_printf("counts of moves: %d\n", game->move_count);
+		ft_printf(" counts of moves : %d\n", game->move_count);
 		handle_game_clear(game);
 		return (1);
 	}

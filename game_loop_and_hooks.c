@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:45:36 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 20:24:49 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 21:09:48 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,21 @@ int	render_map(t_game *game)
 
 void	handle_game_clear(t_game *game)
 {
-	ft_printf(" --- Congratulations! You cleared the game! --- \n");
+	ft_printf(" Congratulations! You cleared the game! \n");
 	ft_printf(" Total moves: %d\n", game->move_count);
 	close_window_hook(game);
 }
 
 int	close_window_hook(t_game *game)
 {
-	ft_putendl_fd(" --- window close hook --- ", STDOUT_FILENO);
 	my_clean_game(game);
 	exit(0);
 }
 
 int	key_press_hook(int keycode, t_game *game)
 {
-	ft_putendl_fd(" --- key press hook --- ", STDOUT_FILENO);
 	if (keycode == KEY_ESC)
-	{
-		ft_putendl_fd(" --- ESC key : window close hook --- ", STDOUT_FILENO);
 		close_window_hook(game);
-	}
 	else if (keycode == KEY_W)
 		move_player(game, 0, -1);
 	else if (keycode == KEY_S)
