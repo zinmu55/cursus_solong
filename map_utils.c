@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:38:13 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 18:07:05 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:22:17 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ void	read_map_from_file(const char *file_path, t_game *game)
 
 	(void)file_path;
 	fd = open(file_path, O_RDONLY);
+	if (fd == -1)
+	{
+		my_clean_game_exit(game, "The file does not exist.");
+	}
 	game->map.data = NULL;
 	i = 0;
 	while (1)

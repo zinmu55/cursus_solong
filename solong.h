@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 18:10:45 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:24:39 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,6 @@ typedef struct s_game
 	int		img_height;
 }			t_game;
 
-// Function Prototypes
-
-// map_utils.c
-// void		my_print_map(char **mapdata);
-size_t		count_double_array_lines(char **double_array);
 char		**ft_stradd(char **double_array, char *new_str);
 void		read_map_from_file(const char *file_path, t_game *game);
 char		**copy_map_data(t_map *map);
@@ -129,7 +124,7 @@ int			init_game(t_game *game);
 int			main(int argc, char **argv);
 
 // tmp.c
-void		my_error_exit(char *message);
-void		my_free_double_ptr(char **ptr, size_t count);
+void		my_clean_game_exit(t_game *game, char *message);
+void		my_free_double_ptr(char **ptr);
 
 #endif
