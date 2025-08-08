@@ -6,32 +6,33 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:40:16 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 20:22:07 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 19:41:15 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./solong.h"
 
-void	check_walls(t_map *map)
+void	check_walls(t_game *game)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	t_map	*map;
 
+	map = &(game->map);
 	x = 0;
 	y = 0;
 	while (x++ < map->width - 1)
 	{
 		if (map->data[0][x] != '1' || map->data[map->height - 1][x] != '1')
 		{
-			ft_printf(" x = %d \n", x);
-			error_exit("walls check error (top or bottom)");
+			my_clean_game_exit(game, "walls check error (top or bottom)");
 		}
 	}
 	while (y++ < map->height - 1)
 	{
 		if (map->data[y][0] != '1' || map->data[y][map->width - 1] != '1')
 		{
-			error_exit("walls check error (both sides)");
+			my_clean_game_exit(game, "walls check error (both sides)");
 		}
 	}
 }
