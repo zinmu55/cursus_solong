@@ -5,6 +5,8 @@ void	my_clean_game_exit(t_game *game, char *message)
 {
 	// my_free_double_ptr(game->map.data);
 	destroy_game_resources(game);
+	// mlx_destroy_display(game->win_ptr);
+	// free(game->win_ptr);
 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	// mlx_destroy(game->mlx_ptr);

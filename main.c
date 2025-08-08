@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+        */
+/*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:47:53 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/04 09:16:44 by shintarokoh      ###   ########.fr       */
+/*   Updated: 2025/08/08 18:55:54 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ int	init_game(t_game *game)
 	game->mlx_ptr = mlx_init();
 	if (game->mlx_ptr == NULL)
 		return (1);
-	// game->win_ptr = mlx_new_window(game->mlx_ptr, 1200, 800, "STEP window");
-	// if (game->win_ptr == NULL)
-	// 	return (1);
-	// ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
+	game->win_ptr = NULL;
+	game->map.data = NULL;
+	game->img_wall = NULL;
+	game->img_floor = NULL;
+	game->img_player = NULL;
+	game->img_collectible = NULL;
+	game->img_exit = NULL;
 	game->move_count = 0;
 	return (0);
 }
