@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:47:53 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 18:55:54 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 19:13:27 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ int	main(int argc, char **argv)
 	if (init_game(&game))
 		return (1);
 	read_map_from_file(argv[1], &game);
-	validate_map(&(game.map));
+	validate_map(&game);
 	ft_putendl_fd(" --- open a window --- ", STDOUT_FILENO);
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.map.width * TILE_SIZE,
 				game.map.height * TILE_SIZE, "STEP window");
 	if (game.win_ptr == NULL)
 		return (1);
-	load_images(&game);
 	mlx_hook(game.win_ptr, 17, 1L << 17, close_window_hook, &game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press_hook, &game);
+	load_images(&game);
 	render_map(&game);
 	mlx_loop(game.mlx_ptr);
 	destroy_game_resources(&game);

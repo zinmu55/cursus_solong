@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:41:50 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 18:08:39 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 19:06:15 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void	validate_playability(t_map *map)
 	free_double_ptr(copied_map.data, copied_map.height);
 }
 
-void	validate_map(t_map *map)
+void	validate_map(t_game *game)
 {
 	ft_printf(" --- Validating map --- \n");
-	check_walls(map);
-	check_elements(map);
-	validate_playability(map);
+	check_walls(&(game->map));
+	check_elements(&(game->map));
+	validate_playability(&(game->map));
 	ft_printf(" --- Map validation successful ---\n");
 }

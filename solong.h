@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 18:24:39 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 19:08:08 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void		flood_fill(t_map *map, int x, int y);
 bool		map_includes_specific_char(char **grid, int width, int height,
 				char c);
 void		validate_playability(t_map *map);
-void		validate_map(t_map *map);
+void		validate_map(t_game *game);
 
 // game_loop_and_hooks.c
 int			close_window_hook(t_game *game);
@@ -124,6 +124,7 @@ int			init_game(t_game *game);
 int			main(int argc, char **argv);
 
 // tmp.c
+void		my_clean_game(t_game *game);
 void		my_clean_game_exit(t_game *game, char *message);
 void		my_free_double_ptr(char **ptr);
 
