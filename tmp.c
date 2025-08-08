@@ -1,18 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tmp.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/08 20:26:33 by skohtake          #+#    #+#             */
+/*   Updated: 2025/08/08 20:26:36 by skohtake         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "./solong.h"
 
 void	my_clean_game(t_game *game)
 {
-	// my_free_double_ptr(game->map.data);
 	destroy_game_resources(game);
-	// mlx_destroy_display(game->win_ptr);
-	// free(game->win_ptr);
 	mlx_destroy_display(game->mlx_ptr);
-	// mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	free(game->mlx_ptr);
-	// mlx_destroy(game->mlx_ptr);
-	// free(game->mlx_ptr);
-	// free(game->win_ptr);
 }
 
 void	my_clean_game_exit(t_game *game, char *message)

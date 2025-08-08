@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:45:36 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 19:24:02 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:24:49 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	handle_game_clear(t_game *game)
 int	close_window_hook(t_game *game)
 {
 	ft_putendl_fd(" --- window close hook --- ", STDOUT_FILENO);
-	// if (game->mlx_ptr)
-	// 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	my_clean_game(game);
 	exit(0);
 }

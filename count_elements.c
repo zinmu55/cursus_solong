@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:40:16 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 19:47:31 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:24:32 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	check_elements(t_game *game)
 	if (map->player_count != 1)
 	{
 		ft_printf(" player_count : %d \n", map->player_count);
-		my_clean_game_exit(game,"Map must contain exactly one player ('P').");
+		my_clean_game_exit(game, "Map must contain exactly one player ('P').");
 	}
 	if (map->exit_count != 1)
 	{
