@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:41:50 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 20:29:30 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:03:10 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ void	validate_map(t_map *map)
 	check_walls(map);
 	check_elements(map);
 	validate_playability(map);
-	printf(" --- Map validation successful ---\n");
+	ft_printf(" --- Map validation successful ---\n");
 }
