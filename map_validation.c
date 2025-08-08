@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:41:50 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 19:34:53 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 19:57:12 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ bool	map_includes_specific_char(char **grid, int width, int height, char c)
 	return (false);
 }
 
-void	validate_playability(t_map *map)
+void	validate_playability(t_game *game, t_map *map)
 {
 	t_map	copied_map;
 
 	copied_map.data = copy_map_data(map);
 	if (!copied_map.data)
-		error_exit("Memory allocation failed map copy data in flood fill.");
+		my_clean_game_exit(game, "Memory allocation failed map copy.");
 	copied_map.width = map->width;
 	copied_map.height = map->height;
 	flood_fill(&copied_map, map->player_pos_x, map->player_pos_y);
@@ -76,13 +76,13 @@ void	validate_playability(t_map *map)
 			COLLECTIBLE))
 	{
 		free_double_ptr(copied_map.data, map->height);
-		error_exit("Map is not playable: Not all collectibles are reachable.");
+		my_clean_game_exit(game, "Not all collectibles are reachable.");
 	}
 	if (map_includes_specific_char(copied_map.data, map->width, map->height,
 			EXIT))
 	{
 		free_double_ptr(copied_map.data, map->height);
-		error_exit("Map is not playable: Exit is not reachable.");
+		my_clean_game_exit(game, "Exit is not reachable.");
 	}
 	ft_printf(" --- Map path playability validation successful. ---\n");
 	free_double_ptr(copied_map.data, copied_map.height);
@@ -92,7 +92,7 @@ void	validate_map(t_game *game)
 {
 	ft_printf(" --- Validating map --- \n");
 	check_walls(game);
-	check_elements(&(game->map));
-	validate_playability(&(game->map));
+	check_elements(game);
+	validate_playability(game, &(game->map));
 	ft_printf(" --- Map validation successful ---\n");
 }

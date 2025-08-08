@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:40:16 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 19:41:15 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 19:47:31 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,24 @@ void	count_elements(t_map *map)
 	}
 }
 
-void	check_elements(t_map *map)
+void	check_elements(t_game *game)
 {
+	t_map	*map;
+
+	map = &(game->map);
 	count_elements(map);
 	if (map->player_count != 1)
 	{
 		ft_printf(" player_count : %d \n", map->player_count);
-		error_exit("Map must contain exactly one player ('P').");
+		my_clean_game_exit(game,"Map must contain exactly one player ('P').");
 	}
 	if (map->exit_count != 1)
 	{
-		error_exit("Map must contain exactly one exit ('E').");
+		my_clean_game_exit(game, "Map must contain exactly one exit ('E').");
 	}
 	if (map->collectible_count < 1)
 	{
-		error_exit("Map must contain at least one collectible ('C').");
+		my_clean_game_exit(game,
+			"Map must contain at least one collectible ('C').");
 	}
 }
