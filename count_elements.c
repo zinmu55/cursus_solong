@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:40:16 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 20:24:32 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:40:04 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	check_walls(t_game *game)
 	{
 		if (map->data[0][x] != '1' || map->data[map->height - 1][x] != '1')
 		{
-			my_clean_game_exit(game, "walls check error (top or bottom)");
+			my_clean_error_exit(game, "walls check error (top or bottom)");
 		}
 	}
 	while (y++ < map->height - 1)
 	{
 		if (map->data[y][0] != '1' || map->data[y][map->width - 1] != '1')
 		{
-			my_clean_game_exit(game, "walls check error (both sides)");
+			my_clean_error_exit(game, "walls check error (both sides)");
 		}
 	}
 }
@@ -85,15 +85,15 @@ void	check_elements(t_game *game)
 	if (map->player_count != 1)
 	{
 		ft_printf(" player_count : %d \n", map->player_count);
-		my_clean_game_exit(game, "Map must contain exactly one player ('P').");
+		my_clean_error_exit(game, "Map must contain exactly one player ('P').");
 	}
 	if (map->exit_count != 1)
 	{
-		my_clean_game_exit(game, "Map must contain exactly one exit ('E').");
+		my_clean_error_exit(game, "Map must contain exactly one exit ('E').");
 	}
 	if (map->collectible_count < 1)
 	{
-		my_clean_game_exit(game,
+		my_clean_error_exit(game,
 			"Map must contain at least one collectible ('C').");
 	}
 }

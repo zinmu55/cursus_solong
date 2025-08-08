@@ -6,7 +6,7 @@
 #    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/08/08 18:24:18 by skohtake         ###   ########.fr        #
+#    Updated: 2025/08/08 20:31:05 by skohtake         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,6 @@ INCLUDES := -L./libft -lft -L./gnl -lgnl -L./ft_printf -lftprintf
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) $(INCLUDES) 
-
-step : $(OBJS)
 	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS) $(INCLUDES) 
 
 %.o : %.c

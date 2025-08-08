@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 19:55:17 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:40:04 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int			main(int argc, char **argv);
 
 // tmp.c
 void		my_clean_game(t_game *game);
-void		my_clean_game_exit(t_game *game, char *message);
+void		my_clean_error_exit(t_game *game, char *message);
 void		my_free_double_ptr(char **ptr);
 
 #endif

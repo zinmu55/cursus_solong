@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:41:50 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 19:57:12 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:40:04 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	validate_playability(t_game *game, t_map *map)
 
 	copied_map.data = copy_map_data(map);
 	if (!copied_map.data)
-		my_clean_game_exit(game, "Memory allocation failed map copy.");
+		my_clean_error_exit(game, "Memory allocation failed map copy.");
 	copied_map.width = map->width;
 	copied_map.height = map->height;
 	flood_fill(&copied_map, map->player_pos_x, map->player_pos_y);
@@ -76,13 +76,13 @@ void	validate_playability(t_game *game, t_map *map)
 			COLLECTIBLE))
 	{
 		free_double_ptr(copied_map.data, map->height);
-		my_clean_game_exit(game, "Not all collectibles are reachable.");
+		my_clean_error_exit(game, "Not all collectibles are reachable.");
 	}
 	if (map_includes_specific_char(copied_map.data, map->width, map->height,
 			EXIT))
 	{
 		free_double_ptr(copied_map.data, map->height);
-		my_clean_game_exit(game, "Exit is not reachable.");
+		my_clean_error_exit(game, "Exit is not reachable.");
 	}
 	ft_printf(" --- Map path playability validation successful. ---\n");
 	free_double_ptr(copied_map.data, copied_map.height);

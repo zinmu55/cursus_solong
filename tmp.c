@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 20:26:33 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 20:26:36 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:40:04 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	my_clean_game(t_game *game)
 	free(game->mlx_ptr);
 }
 
-void	my_clean_game_exit(t_game *game, char *message)
+void	my_clean_error_exit(t_game *game, char *message)
 {
 	my_clean_game(game);
-	ft_putendl_fd(" --- error exit --- ", STDOUT_FILENO);
+	ft_putendl_fd("Error\n", STDOUT_FILENO);
 	ft_putendl_fd(message, STDOUT_FILENO);
 	exit(EXIT_FAILURE);
 }
