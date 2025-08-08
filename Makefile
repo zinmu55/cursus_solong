@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shintarokohtake <shintarokohtake@studen    +#+  +:+       +#+         #
+#    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/08/04 08:58:49 by shintarokoh      ###   ########.fr        #
+#    Updated: 2025/08/08 18:09:49 by skohtake         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,10 @@ UNAME_S := $(shell uname)
 MLX_LIB := mlx
 
 ifeq ($(UNAME_S), Darwin) 
-	MLX_DIR := ../mlx/minilibx_opengl_20191021
+	MLX_DIR := ./mlx/minilibx_opengl_20191021
 	LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB)  -framework OpenGL -framework AppKit -framework Cocoa
 else ifeq ($(UNAME_S), Linux)
-	MLX_DIR := ../mlx/minilibx_linux
+	MLX_DIR := ./mlx/minilibx_linux
     LFLAGS := -L$(MLX_DIR) -l$(MLX_LIB) -lXext -lX11
 else
 	$(shell echo "Unsupported OS: " && echo $(UNAME_S))

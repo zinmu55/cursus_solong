@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:41:50 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 18:03:10 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:08:39 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	is_valid_position_to_fill(t_map *map, int x, int y)
 	return (true);
 }
 
-void	my_flood_fill(t_map *map, int x, int y)
+void	flood_fill(t_map *map, int x, int y)
 {
 	const int	dx[] = {0, 0, -1, 1};
 	const int	dy[] = {-1, 1, 0, 0};
@@ -34,10 +34,10 @@ void	my_flood_fill(t_map *map, int x, int y)
 		return ;
 	}
 	map->data[y][x] = VISITED;
-	my_flood_fill(map, x + dx[UP], y + dy[UP]);
-	my_flood_fill(map, x + dx[DOWN], y + dy[DOWN]);
-	my_flood_fill(map, x + dx[LEFT], y + dy[LEFT]);
-	my_flood_fill(map, x + dx[RIGHT], y + dy[RIGHT]);
+	flood_fill(map, x + dx[UP], y + dy[UP]);
+	flood_fill(map, x + dx[DOWN], y + dy[DOWN]);
+	flood_fill(map, x + dx[LEFT], y + dy[LEFT]);
+	flood_fill(map, x + dx[RIGHT], y + dy[RIGHT]);
 }
 
 bool	map_includes_specific_char(char **grid, int width, int height, char c)
@@ -71,7 +71,7 @@ void	validate_playability(t_map *map)
 		error_exit("Memory allocation failed map copy data in flood fill.");
 	copied_map.width = map->width;
 	copied_map.height = map->height;
-	my_flood_fill(&copied_map, map->player_pos_x, map->player_pos_y);
+	flood_fill(&copied_map, map->player_pos_x, map->player_pos_y);
 	if (map_includes_specific_char(copied_map.data, map->width, map->height,
 			COLLECTIBLE))
 	{

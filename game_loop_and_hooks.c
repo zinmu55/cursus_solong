@@ -6,13 +6,13 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:45:36 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 20:26:41 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:08:58 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./solong.h"
 
-void	my_render_tile(t_game *game, int x, int y, char tile)
+void	render_tile(t_game *game, int x, int y, char tile)
 {
 	void	*tile_img;
 
@@ -43,7 +43,7 @@ int	render_map(t_game *game)
 		x = 0;
 		while (x < game->map.width)
 		{
-			my_render_tile(game, x, y, game->map.data[y][x]);
+			render_tile(game, x, y, game->map.data[y][x]);
 			x++;
 		}
 		y++;

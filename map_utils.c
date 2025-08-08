@@ -6,25 +6,25 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:38:13 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/03 20:23:33 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:07:05 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./solong.h"
 
-void	my_print_map(char **mapdata) // you will comment out this function.
-{
-	int	y;
+// void	my_print_map(char **mapdata) // you will comment out this function.
+// {
+// 	int	y;
 
-	ft_printf(" --- Current Map State --- \n");
-	y = 0;
-	while (mapdata[y])
-	{
-		ft_printf("	%s\n", mapdata[y]);
-		y++;
-	}
-	ft_printf(" ------------------------- \n");
-}
+// 	ft_printf(" --- Current Map State --- \n");
+// 	y = 0;
+// 	while (mapdata[y])
+// 	{
+// 		ft_printf("	%s\n", mapdata[y]);
+// 		y++;
+// 	}
+// 	ft_printf(" ------------------------- \n");
+// }
 
 size_t	count_double_array_lines(char **double_array)
 {
@@ -80,7 +80,6 @@ void	read_map_from_file(const char *file_path, t_game *game)
 			break ;
 		i++;
 	}
-	my_print_map(game->map.data);
 	close(fd);
 	game->map.width = ft_strlen(game->map.data[0]);
 	game->map.height = i;
