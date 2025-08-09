@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:38:13 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 20:40:04 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:49:51 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	read_map_from_file(const char *file_path, t_game *game)
 		i++;
 	}
 	close(fd);
-	game->map.width = ft_strlen(game->map.data[0]);
+	game->map.width = ft_strlen(game->map.data[0]);	//	segv if map is null.
 	game->map.height = i;
 }
 
