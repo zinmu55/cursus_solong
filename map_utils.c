@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:38:13 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/13 13:00:14 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:33:10 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	read_map_from_file(const char *file_path, t_game *game)
 	if (!game->map.data)
 		my_clean_error_exit(game, "Map file has no data.");
 	close(fd);
-	game->map.width = ft_strlen(game->map.data[0]);	//	segv if map is null.
+	game->map.width = ft_strlen(game->map.data[0]);
 	game->map.height = i;
 }
 

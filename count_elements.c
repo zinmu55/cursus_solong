@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:40:16 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/13 12:11:35 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:28:58 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	check_walls(t_game *game)
 	{
 		if (map->data[0][x] != '1' || map->data[map->height - 1][x] != '1')
 		{
-			my_clean_error_exit(game, "walls check error (top or bottom)");
+			my_clean_error_exit(game, "walls check error");
 		}
 	}
 	while (y++ < map->height - 1)
 	{
 		if (map->data[y][0] != '1' || map->data[y][map->width - 1] != '1')
 		{
-			my_clean_error_exit(game, "walls check error (both sides)");
+			my_clean_error_exit(game, "walls check error");
 		}
 	}
 }
@@ -54,7 +54,7 @@ void	update_counts(t_game *game, t_map *map, int x, int y)
 		map->collectible_count++;
 	else if (c != '0' && c != '1')
 		my_clean_error_exit(game,
-			"map has invalid characters. (Allowed: 0, 1, P, E, C) ");
+			"Map has invalid characters. (Allowed: 0, 1, P, E, C) ");
 }
 
 void	count_elements(t_game *game, t_map *map)
