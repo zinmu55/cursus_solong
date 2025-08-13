@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 20:23:07 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 20:55:26 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:02:32 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ char		**copy_map_data(t_map *map);
 
 // count_elements.c
 void		check_walls(t_game *game);
-void		update_counts(t_map *map, int x, int y);
-void		count_elements(t_map *map);
+void		update_counts(t_game *game, t_map *map, int x, int y);
+void		count_elements(t_game *game, t_map *map);
 void		check_elements(t_game *game);
 
 // map_validation.c

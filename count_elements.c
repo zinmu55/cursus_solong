@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:40:16 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 20:40:04 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:11:35 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	check_walls(t_game *game)
 	}
 }
 
-void	update_counts(t_map *map, int x, int y)
+void	update_counts(t_game *game, t_map *map, int x, int y)
 {
 	char	c;
 
@@ -53,10 +53,11 @@ void	update_counts(t_map *map, int x, int y)
 	else if (c == 'C')
 		map->collectible_count++;
 	else if (c != '0' && c != '1')
-		error_exit("map has invalid characters. (Allowed: 0, 1, P, E, C) ");
+		my_clean_error_exit(game,
+			"map has invalid characters. (Allowed: 0, 1, P, E, C) ");
 }
 
-void	count_elements(t_map *map)
+void	count_elements(t_game *game, t_map *map)
 {
 	int	x;
 	int	y;
@@ -70,7 +71,7 @@ void	count_elements(t_map *map)
 	{
 		while (++x < map->width)
 		{
-			update_counts(map, x, y);
+			update_counts(game, map, x, y);
 		}
 		x = -1;
 	}
@@ -81,7 +82,7 @@ void	check_elements(t_game *game)
 	t_map	*map;
 
 	map = &(game->map);
-	count_elements(map);
+	count_elements(game, map);
 	if (map->player_count != 1)
 	{
 		ft_printf(" player_count : %d \n", map->player_count);
