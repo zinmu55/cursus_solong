@@ -6,18 +6,11 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:37:03 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/13 13:31:16 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:40:06 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./solong.h"
-
-// void	error_exit(char *message)
-// {
-// 	ft_putstr_fd(" --- error exit --- ", STDOUT_FILENO);
-// 	ft_putendl_fd(message, STDOUT_FILENO);
-// 	exit(EXIT_FAILURE);
-// }
 
 void	free_double_ptr(char **ptr, size_t count)
 {

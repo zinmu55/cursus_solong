@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:47:53 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 21:00:54 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:45:59 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("use just 1 parameter (map file path) with this program. \n");
+		ft_printf("Use just 1 parameter (map file path) with this program. \n");
 		return (1);
 	}
 	if (init_game(&game))
