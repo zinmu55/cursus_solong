@@ -6,11 +6,28 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:40:16 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/13 13:28:58 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/13 20:37:27 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./solong.h"
+
+void	check_map_shape(t_game *game)
+{
+	t_map	*map;
+	int		i;
+
+	map = &(game->map);
+	if (!game->map.data)
+		my_clean_error_exit(game, "Unable to read map data.");
+	i = 0;
+	while (i < map->height)
+	{
+		if ((int)ft_strlen(map->data[i]) != map->width)
+			my_clean_error_exit(game, "Line size is not aligned.");
+		i++;
+	}
+}
 
 void	check_walls(t_game *game)
 {

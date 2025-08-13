@@ -6,7 +6,7 @@
 /*   By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:41:50 by skohtake          #+#    #+#             */
-/*   Updated: 2025/08/08 21:02:27 by skohtake         ###   ########.fr       */
+/*   Updated: 2025/08/13 20:33:36 by skohtake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	validate_playability(t_game *game, t_map *map)
 void	validate_map(t_game *game)
 {
 	ft_printf(" --- Validating map --- \n");
+	check_map_shape(game);
 	check_walls(game);
 	check_elements(game);
 	validate_playability(game, &(game->map));
