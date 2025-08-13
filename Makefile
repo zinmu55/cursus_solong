@@ -6,12 +6,12 @@
 #    By: skohtake <skohtake@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/19 20:52:26 by skohtake          #+#    #+#              #
-#    Updated: 2025/08/13 13:48:11 by skohtake         ###   ########.fr        #
+#    Updated: 2025/08/13 13:55:19 by skohtake         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := so_long
-SRCS := map_utils.c count_elements.c map_validation.c game_loop_and_hooks.c move_player.c  resource_management.c main.c clean_up.c
+SRCS := map_utils.c count_elements.c map_validation.c game_loop_and_hooks.c move_player.c  resource_management.c main.c clean_exit.c
 # SRCS := map_utils.c count_elements.c map_validation.c game_loop_and_hooks.c move_player.c  resource_management.c main.c
 OBJS = $(SRCS:.c=.o)
 UNAME_S := $(shell uname)
